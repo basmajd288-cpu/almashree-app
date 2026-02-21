@@ -10,6 +10,8 @@
             --accent-color: #3498db;
             --bg-color: #f8f9fa;
             --text-color: #333;
+            --telegram-color: #0088cc;
+            --facebook-color: #3b5998;
         }
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -33,7 +35,7 @@
             border-bottom: 4px solid var(--accent-color);
         }
         .container {
-            width: 90%;
+            width: 95%;
             max-width: 500px;
             margin-top: 20px;
         }
@@ -72,7 +74,7 @@
             display: none;
             width: 100%;
         }
-        .teacher-card, .subject-card {
+        .teacher-card {
             background: white;
             padding: 15px;
             border-radius: 10px;
@@ -81,8 +83,25 @@
             box-shadow: 0 2px 4px rgba(0,0,0,0.05);
             font-size: 16px;
             cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            text-decoration: none;
+            color: var(--text-color);
+            transition: background 0.2s;
         }
-        .teacher-card b { color: var(--primary-color); }
+        .teacher-card:hover { background: #f9f9f9; }
+        .subject-card {
+            background: white;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 10px;
+            border-right: 5px solid #e67e22;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            font-size: 16px;
+            cursor: pointer;
+        }
+        .link-label { font-size: 12px; font-weight: bold; }
         .footer {
             margin-top: 20px;
             padding: 20px;
@@ -109,17 +128,59 @@
 
     <div id="teachersSection" class="content-area">
         <h2>إدارة وكادر المدرسة</h2>
-        <div class="teacher-card">👑 <b>علي عبد الحسين</b> - المدير</div>
-        <div class="teacher-card">🤝 <b>غيث رعد</b> - المرشد التربوي</div>
-        <div class="teacher-card">🔤 <b>ليث خميس</b> - اختصاص لغة إنجليزية</div>
-        <div class="teacher-card">🔤 <b>يونس الكدساوي</b> - اختصاص لغة إنجليزية</div>
-        <div class="teacher-card">📖 <b>محمد منديل</b> - اختصاص لغة عربية</div>
-        <div class="teacher-card">📖 <b>سعد المعموري</b> - اختصاص لغة عربية</div>
-        <div class="teacher-card">📖 <b>مرتضى المعموري</b> - اختصاص لغة عربية</div>
-        <div class="teacher-card">🕌 <b>محمد الدليمي</b> - اختصاص تربية إسلامية</div>
-        <div class="teacher-card">📐 <b>علاء الكلابي</b> - اختصاص رياضيات</div>
-        <div class="teacher-card">⚛️ <b>احمد الخفاجي</b> - اختصاص فيزياء</div>
-        <div class="teacher-card">⚛️ <b>احمد زغير الدهاچي</b> - اختصاص فيزياء</div>
+        
+        <a href="https://www.facebook.com/share/1FkBr4qyvv/" target="_blank" class="teacher-card">
+            <span>👑 <b>علي عبد الحسين</b> - المدير</span>
+            <span class="link-label" style="color: var(--facebook-color);">فيسبوك ↗️</span>
+        </a>
+
+        <a href="https://t.me/ghth9" target="_blank" class="teacher-card">
+            <span>🤝 <b>غيث رعد</b> - المرشد التربوي</span>
+            <span class="link-label" style="color: var(--telegram-color);">تليجرام ↗️</span>
+        </a>
+
+        <a href="https://t.me/Layth9" target="_blank" class="teacher-card">
+            <span>🔤 <b>ليث خميس</b> - إنجليزي</span>
+            <span class="link-label" style="color: var(--telegram-color);">تليجرام ↗️</span>
+        </a>
+
+        <a href="https://t.me/YounisEng" target="_blank" class="teacher-card">
+            <span>🔤 <b>يونس الكدساوي</b> - إنجليزي</span>
+            <span class="link-label" style="color: var(--telegram-color);">تليجرام ↗️</span>
+        </a>
+
+        <a href="https://t.me/ali2021m" target="_blank" class="teacher-card">
+            <span>📖 <b>محمد منديل</b> - لغة عربية</span>
+            <span class="link-label" style="color: var(--telegram-color);">تليجرام ↗️</span>
+        </a>
+
+        <a href="https://www.facebook.com/share/17wTbSvMMP/" target="_blank" class="teacher-card">
+            <span>📖 <b>سعد المعموري</b> - لغة عربية</span>
+            <span class="link-label" style="color: var(--facebook-color);">فيسبوك ↗️</span>
+        </a>
+
+        <div class="teacher-card" style="cursor: default; border-right-color: #ccc;">
+            <span>📖 <b>مرتضى المعموري</b> - لغة عربية</span>
+        </div>
+
+        <div class="teacher-card" style="cursor: default; border-right-color: #ccc;">
+            <span>🕌 <b>محمد الدليمي</b> - تربية إسلامية</span>
+        </div>
+
+        <a href="https://t.me/all0aa" target="_blank" class="teacher-card">
+            <span>📐 <b>علاء الكلابي</b> - رياضيات</span>
+            <span class="link-label" style="color: var(--telegram-color);">تليجرام ↗️</span>
+        </a>
+
+        <a href="https://t.me/A91h5" target="_blank" class="teacher-card">
+            <span>⚛️ <b>احمد الخفاجي</b> - فيزياء</span>
+            <span class="link-label" style="color: var(--telegram-color);">تليجرام ↗️</span>
+        </a>
+
+        <a href="https://t.me/alshmryahmed" target="_blank" class="teacher-card">
+            <span>⚛️ <b>احمد زغير الدهاجي</b> - فيزياء</span>
+            <span class="link-label" style="color: var(--telegram-color);">تليجرام ↗️</span>
+        </a>
     </div>
 
     <div id="class6Section" class="content-area">
@@ -165,7 +226,6 @@
 
     function showSection(sectionId) {
         document.getElementById('mainMenu').style.display = 'none';
-        // إخفاء كل المناطق أولاً
         var areas = document.getElementsByClassName('content-area');
         for(var i=0; i<areas.length; i++) { areas[i].style.display = 'none'; }
         
