@@ -42,7 +42,69 @@
             transition: background-color 0.3s, color 0.3s;
         }
 
-        /* تنسيق الجداول الجديد */
+        /* تنسيق الملف الشخصي الجديد */
+        .user-profile-card {
+            background: var(--card-bg);
+            width: 95%;
+            max-width: 500px;
+            margin: 20px auto;
+            padding: 20px;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            border: 1px solid var(--table-border);
+        }
+        .profile-img-container {
+            position: relative;
+            width: 100px;
+            height: 100px;
+            margin: 0 auto 15px;
+        }
+        .profile-img {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid var(--accent-color);
+            background: #eee;
+        }
+        .edit-img-btn {
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            background: var(--accent-color);
+            color: white;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            border: 2px solid white;
+        }
+        #userNameDisplay {
+            font-size: 20px;
+            font-weight: bold;
+            margin: 10px 0;
+        }
+        .profile-actions {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            margin-top: 10px;
+        }
+        .btn-profile {
+            padding: 8px 15px;
+            border-radius: 8px;
+            border: none;
+            cursor: pointer;
+            font-size: 14px;
+            background: var(--accent-color);
+            color: white;
+        }
+
+        /* تنسيق الجداول */
         .schedule-table {
             width: 100%;
             border-collapse: collapse;
@@ -297,12 +359,23 @@
 
 <header>🏫 إعدادية المشروع للبنين</header>
 
+<div id="userProfileArea" class="user-profile-card">
+    <div class="profile-img-container">
+        <img id="userAvatar" src="https://cdn-icons-png.flaticon.com/512/149/149071.png" class="profile-img">
+        <label for="avatarInput" class="edit-img-btn">📷</label>
+        <input type="file" id="avatarInput" hidden accept="image/*" onchange="updateAvatar(event)">
+    </div>
+    <div id="userNameDisplay">اسم المستخدم</div>
+    <div class="profile-actions">
+        <button class="btn-profile" onclick="updateName()">تغيير الاسم</button>
+    </div>
+</div>
+
 <div class="container">
     <button id="backBtn" class="btn-back" onclick="goHome()">🏠 العودة للقائمة الرئيسية</button>
 
     <div id="mainMenu">
         <div class="section-card" onclick="showSection('scheduleMainSection')" style="border-right-color: #27ae60;">📅 الجدول الأسبوعي <span>⬅️</span></div>
-        
         <div class="section-card" onclick="showSection('teachersSection')">👨‍🏫 كادر المدرسين <span>⬅️</span></div>
         <div class="section-card" onclick="showSection('class6Section')">🎓 السادس الإعدادي <span>⬅️</span></div>
         <div class="section-card" onclick="showSection('class5Section')">📘 الخامس الإعدادي <span>⬅️</span></div>
@@ -325,16 +398,10 @@
                 </tbody>
             </table>
         </div>
-
         <div class="sub-section-btn" onclick="toggleSchedule('sch5')">جدول الخامس اعدادي</div>
-        <div id="sch5" class="schedule-container">
-            <p style="text-align:center;">(سيتم إضافة الجدول قريباً)</p>
-        </div>
-
+        <div id="sch5" class="schedule-container"><p style="text-align:center;">(سيتم إضافة الجدول قريباً)</p></div>
         <div class="sub-section-btn" onclick="toggleSchedule('sch4')">جدول الرابع اعدادي</div>
-        <div id="sch4" class="schedule-container">
-            <p style="text-align:center;">(سيتم إضافة الجدول قريباً)</p>
-        </div>
+        <div id="sch4" class="schedule-container"><p style="text-align:center;">(سيتم إضافة الجدول قريباً)</p></div>
     </div>
 
     <div id="teachersSection" class="content-area">
@@ -432,7 +499,6 @@
             </div>
         </div>
     </div>
-
 </div>
 
 <div class="footer">
@@ -440,13 +506,39 @@
 </div>
 
 <script>
-    // وظيفة إظهار وإخفاء الجداول الفردية
+    // نظام الملف الشخصي
+    window.onload = function() {
+        const savedName = localStorage.getItem('school_user_name');
+        const savedAvatar = localStorage.getItem('school_user_avatar');
+        if (savedName) document.getElementById('userNameDisplay').innerText = savedName;
+        if (savedAvatar) document.getElementById('userAvatar').src = savedAvatar;
+    }
+
+    function updateName() {
+        const newName = prompt("أدخل الاسم الجديد:");
+        if (newName && newName.trim() !== "") {
+            localStorage.setItem('school_user_name', newName);
+            document.getElementById('userNameDisplay').innerText = newName;
+        }
+    }
+
+    function updateAvatar(event) {
+        const file = event.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const base64Img = e.target.result;
+                localStorage.setItem('school_user_avatar', base64Img);
+                document.getElementById('userAvatar').src = base64Img;
+            };
+            reader.readAsDataURL(file);
+        }
+    }
+
     function toggleSchedule(id) {
         var element = document.getElementById(id);
-        if (element.style.display === "block") {
-            element.style.display = "none";
-        } else {
-            // إخفاء البقية أولاً (اختياري لجعل الشكل أرتب)
+        if (element.style.display === "block") { element.style.display = "none"; } 
+        else {
             document.querySelectorAll('.schedule-container').forEach(el => el.style.display = 'none');
             element.style.display = "block";
         }
@@ -461,27 +553,28 @@
 
     function enterApp() {
         document.getElementById('welcomeOverlay').style.display = 'none';
+        if (!localStorage.getItem('school_user_name')) {
+            updateName();
+        }
     }
 
     function openLink(url) { window.open(url, '_blank'); }
-    
     function showSection(sectionId) {
         document.getElementById('mainMenu').style.display = 'none';
+        document.getElementById('userProfileArea').style.display = 'none';
         var areas = document.getElementsByClassName('content-area');
         for(var i=0; i<areas.length; i++) { areas[i].style.display = 'none'; }
         document.getElementById(sectionId).style.display = 'block';
         document.getElementById('backBtn').style.display = 'block';
     }
-    
     function goHome() {
         document.getElementById('mainMenu').style.display = 'block';
+        document.getElementById('userProfileArea').style.display = 'block';
         var areas = document.getElementsByClassName('content-area');
         for(var i=0; i<areas.length; i++) { areas[i].style.display = 'none'; }
         document.getElementById('backBtn').style.display = 'none';
-        // إخفاء جداول المواد عند العودة
         document.querySelectorAll('.schedule-container').forEach(el => el.style.display = 'none');
     }
-    
     function appendToDisplay(value) { document.getElementById('display').value += value; }
     function clearDisplay() { document.getElementById('display').value = ''; }
     function calculate() {
@@ -492,4 +585,3 @@
 
 </body>
 </html>
-
