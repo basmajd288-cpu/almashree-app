@@ -3,196 +3,493 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>تطبيق إعدادية المشروع - النسخة المصححة</title>
+    <title>تطبيق إعدادية المشروع للبنين</title>
     <style>
         :root {
-            --primary-color: #1a1a1a;
+            --primary-color: #2c3e50;
             --accent-color: #3498db;
-            --card-bg: #242424;
-            --text-color: #ffffff;
-            --delete-btn: #e74c3c;
-            --photo-btn: #2980b9;
+            --bg-color: #f8f9fa;
+            --text-color: #333;
+            --telegram-color: #0088cc;
+            --facebook-color: #3b5998;
+            --card-bg: white;
+            --footer-bg: #fff;
+            --calc-bg: #34495e;
+            --table-border: #dee2e6;
         }
-        body { font-family: 'Segoe UI', sans-serif; background-color: var(--primary-color); color: var(--text-color); margin: 0; padding-bottom: 50px; }
+
+        /* إعدادات الوضع الليلي */
+        .dark-mode {
+            --primary-color: #1a1a1a;
+            --accent-color: #2980b9;
+            --bg-color: #121212;
+            --text-color: #e0e0e0;
+            --card-bg: #1e1e1e;
+            --footer-bg: #1e1e1e;
+            --calc-bg: #000000;
+            --table-border: #444;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        /* تنسيق الجداول الجديد */
+        .schedule-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+            background-color: var(--card-bg);
+            color: var(--text-color);
+        }
+        .schedule-table th, .schedule-table td {
+            border: 1px solid var(--table-border);
+            padding: 12px 8px;
+            text-align: center;
+            font-size: 14px;
+        }
+        .schedule-table th {
+            background-color: var(--accent-color);
+            color: white;
+        }
+        .day-column {
+            background-color: rgba(52, 152, 219, 0.1);
+            font-weight: bold;
+            width: 25%;
+        }
+
+        /* زر التبديل بين الوضعين */
+        .theme-toggle {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            width: 50px;
+            height: 50px;
+            background-color: var(--primary-color);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+            z-index: 3000;
+            font-size: 24px;
+            border: 2px solid var(--accent-color);
+        }
+
+        /* واجهة الترحيب */
+        #welcomeOverlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: var(--primary-color);
+            z-index: 2000;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-align: center;
+            padding: 20px;
+        }
+        .welcome-text {
+            font-size: 28px;
+            font-weight: bold;
+            margin-bottom: 30px;
+            line-height: 1.6;
+            animation: fadeIn 1.5s ease-in;
+        }
+        .btn-start {
+            background-color: var(--accent-color);
+            color: white;
+            border: none;
+            padding: 15px 50px;
+            border-radius: 30px;
+            font-size: 20px;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            transition: transform 0.2s;
+        }
+        .btn-start:hover { transform: scale(1.1); }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        header {
+            background-color: var(--primary-color);
+            color: white;
+            width: 100%;
+            padding: 20px 0;
+            text-align: center;
+            font-size: 24px;
+            font-weight: bold;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+            border-bottom: 4px solid var(--accent-color);
+        }
+        .container {
+            width: 95%;
+            max-width: 500px;
+            margin-top: 20px;
+        }
+        .section-card {
+            background: var(--card-bg);
+            margin-bottom: 15px;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            cursor: pointer;
+            transition: transform 0.2s, background 0.2s;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-right: 6px solid var(--accent-color);
+            font-weight: bold;
+            color: var(--text-color);
+        }
+        .section-card:hover {
+            transform: scale(1.02);
+            background-color: rgba(52, 152, 219, 0.1);
+        }
+        .btn-back {
+            background-color: #e74c3c;
+            color: white;
+            border: none;
+            padding: 12px;
+            width: 100%;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-bottom: 20px;
+            display: none;
+        }
+        .content-area {
+            display: none;
+            width: 100%;
+        }
+        .teacher-card {
+            background: var(--card-bg);
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 10px;
+            border-right: 5px solid #2ecc71;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            font-size: 16px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            text-decoration: none;
+            color: var(--text-color);
+            transition: background 0.2s;
+        }
+        .teacher-card:hover { background: rgba(46, 204, 113, 0.1); }
+        .subject-card {
+            background: var(--card-bg);
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 10px;
+            border-right: 5px solid #e67e22;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            font-size: 16px;
+            cursor: pointer;
+            color: var(--text-color);
+        }
+        /* تصميم الحاسبة */
+        .calculator {
+            background: var(--calc-bg);
+            padding: 20px;
+            border-radius: 15px;
+            margin-top: 20px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+        }
+        .calc-display {
+            width: 100%;
+            height: 50px;
+            background: #ecf0f1;
+            border: none;
+            border-radius: 5px;
+            margin-bottom: 15px;
+            text-align: left;
+            padding: 10px;
+            font-size: 20px;
+            font-weight: bold;
+            box-sizing: border-box;
+            color: #333;
+        }
+        .calc-buttons {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+        }
+        .calc-btn {
+            padding: 15px;
+            font-size: 18px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            background: #7f8c8d;
+            color: white;
+            transition: background 0.2s;
+        }
+        .calc-btn:hover { background: #95a5a6; }
+        .calc-btn.op { background: #e67e22; }
+        .calc-btn.eq { background: #27ae60; grid-column: span 2; }
+        .calc-btn.clr { background: #e74c3c; grid-column: span 2; }
+
+        .link-label { font-size: 12px; font-weight: bold; }
+        .footer {
+            margin: 30px 10px;
+            padding: 20px;
+            font-size: 14px;
+            line-height: 1.6;
+            color: var(--text-color);
+            text-align: center;
+            background: var(--footer-bg);
+            border-radius: 15px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            border: 1px solid #ddd;
+        }
+        h2 { text-align: center; color: var(--accent-color); }
         
-        /* واجهة الدخول */
-        #loginOverlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #111; z-index: 1000; display: flex; align-items: center; justify-content: center; }
-        .login-card { background: var(--card-bg); padding: 30px; border-radius: 20px; width: 85%; max-width: 400px; text-align: center; border: 1px solid #333; }
-        .login-card input { width: 100%; padding: 12px; margin: 10px 0; border-radius: 8px; border: 1px solid #444; background: #111; color: white; }
-
-        header { background: #000; padding: 20px; text-align: center; font-weight: bold; border-bottom: 2px solid var(--accent-color); font-size: 20px; }
-        .container { width: 95%; max-width: 500px; margin: 20px auto; }
-
-        /* قسم الملف الشخصي - فصل الأزرار هنا */
-        .profile-container { background: var(--card-bg); padding: 20px; border-radius: 15px; text-align: center; margin-bottom: 15px; border: 1px solid #333; }
-        .user-avatar { width: 90px; height: 90px; border-radius: 50%; object-fit: cover; border: 3px solid var(--accent-color); margin-bottom: 10px; }
-        .action-buttons { display: flex; gap: 10px; justify-content: center; margin-top: 15px; }
-        .btn-del { background: var(--delete-btn); color: white; border: none; padding: 10px 15px; border-radius: 8px; cursor: pointer; flex: 1; font-size: 13px; font-weight: bold; }
-        .btn-img { background: var(--photo-btn); color: white; border: none; padding: 10px 15px; border-radius: 8px; cursor: pointer; flex: 1; font-size: 13px; font-weight: bold; }
-
-        /* الأقسام */
-        .main-btn { background: var(--card-bg); padding: 18px; border-radius: 12px; margin-bottom: 10px; display: flex; justify-content: space-between; cursor: pointer; border-left: 5px solid var(--accent-color); font-weight: bold; transition: 0.3s; }
-        .main-btn:hover { background: #333; }
-        .back-home { background: #c0392b; color: white; padding: 15px; border-radius: 10px; text-align: center; margin-bottom: 15px; cursor: pointer; font-weight: bold; display: none; }
-
-        /* كادر المدرسين */
-        .teacher-item { background: #2d2d2d; padding: 15px; border-radius: 10px; margin-bottom: 8px; display: flex; align-items: center; gap: 10px; border-right: 4px solid #27ae60; }
-
-        /* الجدول */
-        .table-style { width: 100%; border-collapse: collapse; background: var(--card-bg); border-radius: 10px; overflow: hidden; }
-        .table-style th, .table-style td { border: 1px solid #333; padding: 12px; text-align: center; font-size: 13px; }
-        .table-style th { background: var(--accent-color); }
-
-        /* الدردشة */
-        .chat-box { background: var(--card-bg); height: 400px; border-radius: 15px; display: flex; flex-direction: column; overflow: hidden; }
-        .messages-area { flex: 1; padding: 15px; overflow-y: auto; background: #1a1a1a; display: flex; flex-direction: column; gap: 10px; }
-        .msg { display: flex; align-items: flex-start; gap: 10px; }
-        .msg-text { background: #333; padding: 10px; border-radius: 10px; font-size: 14px; max-width: 80%; }
-        .chat-input { display: flex; padding: 10px; background: #222; gap: 10px; }
-        .chat-input input { flex: 1; padding: 10px; border-radius: 20px; border: none; background: #111; color: white; }
-
-        .hidden { display: none !important; }
+        .sub-section-btn {
+            background: var(--accent-color);
+            color: white;
+            padding: 15px;
+            margin-bottom: 10px;
+            border-radius: 10px;
+            text-align: center;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        .schedule-container {
+            display: none;
+            margin-bottom: 20px;
+            animation: fadeIn 0.5s;
+        }
     </style>
 </head>
 <body>
 
-<div id="loginOverlay">
-    <div id="startCard" class="login-card">
-        <h2>أهلاً بك في إعدادية المشروع</h2>
-        <button onclick="openForm('student')" style="width:100%; padding:15px; background:var(--accent-color); color:white; border:none; border-radius:10px; cursor:pointer; margin-bottom:10px;">تسجيل كطالب</button>
-        <button onclick="openForm('teacher')" style="width:100%; padding:15px; background: #27ae60; color:white; border:none; border-radius:10px; cursor:pointer;">تسجيل كمدرس</button>
+<div class="theme-toggle" onclick="toggleTheme()" id="themeBtn">🌙</div>
+
+<div id="welcomeOverlay">
+    <div class="welcome-text">
+        اهلا بك في تطبيق اعدادية المشروع للبنين<br>
+        اضغط على بدء للدخول
     </div>
-    <div id="nameForm" class="login-card hidden">
-        <input type="text" id="userNameInput" placeholder="اكتب اسمك هنا...">
-        <button onclick="saveUser()" style="width:100%; padding:12px; background:var(--accent-color); color:white; border:none; border-radius:8px;">حفظ ودخول</button>
-    </div>
+    <button class="btn-start" onclick="enterApp()">بدء</button>
 </div>
 
-<header>🏢 إعدادية المشروع للبنين</header>
+<header>🏫 إعدادية المشروع للبنين</header>
 
 <div class="container">
-    <div id="profileView" class="profile-container">
-        <img id="displayAvatar" src="https://cdn-icons-png.flaticon.com/512/149/149071.png" class="user-avatar">
-        <h3 id="displayUserName" style="margin:0;">تحميل...</h3>
-        <div class="action-buttons">
-            <button class="btn-del" onclick="deleteAccount()">🗑️ حذف الحساب</button>
-            <label for="imgUpload" class="btn-img" style="display:flex; align-items:center; justify-content:center; cursor:pointer;">🖼️ تغيير الصورة</label>
-            <input type="file" id="imgUpload" class="hidden" accept="image/*" onchange="changeAvatar()">
+    <button id="backBtn" class="btn-back" onclick="goHome()">🏠 العودة للقائمة الرئيسية</button>
+
+    <div id="mainMenu">
+        <div class="section-card" onclick="showSection('scheduleMainSection')" style="border-right-color: #27ae60;">📅 الجدول الأسبوعي <span>⬅️</span></div>
+        
+        <div class="section-card" onclick="showSection('teachersSection')">👨‍🏫 كادر المدرسين <span>⬅️</span></div>
+        <div class="section-card" onclick="showSection('class6Section')">🎓 السادس الإعدادي <span>⬅️</span></div>
+        <div class="section-card" onclick="showSection('class5Section')">📘 الخامس الإعدادي <span>⬅️</span></div>
+        <div class="section-card" onclick="showSection('class4Section')">📙 الرابع الإعدادي <span>⬅️</span></div>
+        <div class="section-card" onclick="showSection('calcSection')" style="border-right-color: #9b59b6;">🖩 الحاسبة المدرسية <span>⬅️</span></div>
+    </div>
+
+    <div id="scheduleMainSection" class="content-area">
+        <h2>الجدول الأسبوعي للمراحل</h2>
+        <div class="sub-section-btn" onclick="toggleSchedule('sch6')">جدول السادس اعدادي</div>
+        <div id="sch6" class="schedule-container">
+            <table class="schedule-table">
+                <thead><tr><th>اليوم</th><th>المواد الدراسية</th></tr></thead>
+                <tbody>
+                    <tr><td class="day-column">الاحد</td><td>فيزياء ، عربي ، انكليزي ، احياء ، كيمياء</td></tr>
+                    <tr><td class="day-column">الاثنين</td><td>احياء ، كيمياء ، فيزياء ، انكليزي ، رياضة</td></tr>
+                    <tr><td class="day-column">الثلاثاء</td><td>عربي ، احياء ، رياضيات ، انكليزي ، فيزياء</td></tr>
+                    <tr><td class="day-column">الاربعاء</td><td>رياضيات ، اسلامية ، كيمياء ، انكليزي ، عربي</td></tr>
+                    <tr><td class="day-column">الخميس</td><td>اسلامية ، رياضيات ، فيزياء ، كيمياء ، عربي</td></tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="sub-section-btn" onclick="toggleSchedule('sch5')">جدول الخامس اعدادي</div>
+        <div id="sch5" class="schedule-container">
+            <p style="text-align:center;">(سيتم إضافة الجدول قريباً)</p>
+        </div>
+
+        <div class="sub-section-btn" onclick="toggleSchedule('sch4')">جدول الرابع اعدادي</div>
+        <div id="sch4" class="schedule-container">
+            <p style="text-align:center;">(سيتم إضافة الجدول قريباً)</p>
         </div>
     </div>
 
-    <div id="backBtn" class="back-home" onclick="goHome()">🏠 العودة للقائمة الرئيسية</div>
-
-    <div id="mainMenu">
-        <div class="main-btn" onclick="showSection('teacherSec')">👨‍🏫 كادر المدرسة والادارة <span>⬅️</span></div>
-        <div class="main-btn" onclick="showSection('tableSec')">📅 الجدول الأسبوعي <span>⬅️</span></div>
-        <div class="main-btn" onclick="showSection('chatSec')">💬 غرفة الدردشة الجماعية <span>⬅️</span></div>
+    <div id="teachersSection" class="content-area">
+        <h2>إدارة وكادر المدرسة</h2>
+        <a href="https://www.facebook.com/share/1FkBr4qyvv/" target="_blank" class="teacher-card">
+            <span>👑 <b>علي عبد الحسين</b> - المدير</span>
+            <span class="link-label" style="color: var(--facebook-color);">فيسبوك ↗️</span>
+        </a>
+        <a href="https://t.me/ghth9" target="_blank" class="teacher-card">
+            <span>🤝 <b>غيث رعد</b> - المرشد التربوي</span>
+            <span class="link-label" style="color: var(--telegram-color);">تليجرام ↗️</span>
+        </a>
+        <a href="https://t.me/Layth9" target="_blank" class="teacher-card">
+            <span>🔤 <b>ليث خميس</b> - إنجليزي</span>
+            <span class="link-label" style="color: var(--telegram-color);">تليجرام ↗️</span>
+        </a>
+        <a href="https://t.me/YounisEng" target="_blank" class="teacher-card">
+            <span>🔤 <b>يونس الكدساوي</b> - إنجليزي</span>
+            <span class="link-label" style="color: var(--telegram-color);">تليجرام ↗️</span>
+        </a>
+        <a href="https://t.me/ali2021m" target="_blank" class="teacher-card">
+            <span>📖 <b>محمد منديل</b> - لغة عربية</span>
+            <span class="link-label" style="color: var(--telegram-color);">تليجرام ↗️</span>
+        </a>
+        <a href="https://www.facebook.com/share/17wTbSvMMP/" target="_blank" class="teacher-card">
+            <span>📖 <b>سعد المعموري</b> - لغة عربية</span>
+            <span class="link-label" style="color: var(--facebook-color);">فيسبوك ↗️</span>
+        </a>
+        <a href="https://t.me/all0aa" target="_blank" class="teacher-card">
+            <span>📐 <b>علاء الكلابي</b> - رياضيات</span>
+            <span class="link-label" style="color: var(--telegram-color);">تليجرام ↗️</span>
+        </a>
+        <a href="https://t.me/A91h5" target="_blank" class="teacher-card">
+            <span>⚛️ <b>احمد الخفاجي</b> - فيزياء</span>
+            <span class="link-label" style="color: var(--telegram-color);">تليجرام ↗️</span>
+        </a>
+        <a href="https://t.me/alshmryahmed" target="_blank" class="teacher-card">
+            <span>⚛️ <b>احمد زغير الدهاجي</b> - فيزياء</span>
+            <span class="link-label" style="color: var(--telegram-color);">تليجرام ↗️</span>
+        </a>
     </div>
 
-    <div id="teacherSec" class="hidden">
-        <h3 style="text-align:center;">إدارة المدرسة والمدرسين</h3>
-        <div class="teacher-item">👑 <b>أ. علي عبد الحسين - المدير</b></div>
-        <div class="teacher-item">🤝 <b>أ. غيث رعد - المرشد</b></div>
-        <div class="teacher-item">📖 أ. محمد منديل - لغة عربية</div>
-        <div class="teacher-item">📖 أ. سعد المعموري - لغة عربية</div>
-        <div class="teacher-item">📐 أ. علاء الكلابي - رياضيات</div>
-        <div class="teacher-item">🔤 أ. ليث خميس - إنجليزي</div>
-        <div class="teacher-item">🔤 أ. يونس الكدساوي - إنجليزي</div>
-        <div class="teacher-item">⚛️ أ. احمد الخفاجي - فيزياء</div>
-        <div class="teacher-item">⚛️ أ. احمد زغير - فيزياء</div>
+    <div id="class6Section" class="content-area">
+        <h2>قسم الشروحات - السادس</h2>
+        <div class="subject-card" onclick="openLink('https://www.youtube.com/@RafalAlZubaidi')">✍️ اللغة العربية (رفل الزبيدي)</div>
+        <div class="subject-card" onclick="openLink('https://www.youtube.com/@ahmedfawzi-89')">🔤 اللغة الانكليزية (احمد فوزي)</div>
+        <div class="subject-card" onclick="openLink('https://www.youtube.com/@Haider_Waleed')">📐 الرياضيات (حيدر وليد)</div>
+        <div class="subject-card" onclick="openLink('https://www.youtube.com/@h_alhashimi')">🧪 الكيمياء (حسين الهاشمي)</div>
+        <div class="subject-card" onclick="openLink('https://www.youtube.com/@mouayed79')">⚛️ الفيزياء (مؤيد سليم)</div>
+        <div class="subject-card" onclick="openLink('https://www.youtube.com/@salem-mansour')">🧬 الاحياء (سالم منصور)</div>
     </div>
 
-    <div id="tableSec" class="hidden">
-        <h3 style="text-align:center;">جدول السادس إعدادي</h3>
-        <table class="table-style">
-            <tr style="background:#444;"><th>اليوم</th><th>المواد الدراسية</th></tr>
-            <tr><td>الأحد</td><td>فيزياء، عربي، انكليزي، أحياء، كيمياء</td></tr>
-            <tr><td>الاثنين</td><td>أحياء، كيمياء، فيزياء، انكليزي، رياضة</td></tr>
-            <tr><td>الثلاثاء</td><td>عربي، أحياء، رياضيات، انكليزي، فيزياء</td></tr>
-            <tr><td>الأربعاء</td><td>رياضيات، إسلامية، كيمياء، انكليزي، عربي</td></tr>
-            <tr><td>الخميس</td><td>إسلامية، رياضيات، فيزياء، كيمياء، عربي</td></tr>
-        </table>
+    <div id="class5Section" class="content-area">
+        <h2>قسم الشروحات - الخامس</h2>
+        <div class="subject-card" onclick="openLink('https://www.youtube.com/@RafalAlZubaidi')">✍️ اللغة العربية (رفل الزبيدي)</div>
+        <div class="subject-card" onclick="openLink('https://www.youtube.com/@ahmedfawzi-89')">🔤 اللغة الانكليزية (احمد فوزي)</div>
+        <div class="subject-card" onclick="openLink('https://www.youtube.com/@ali_sadiq')">📐 الرياضيات (علي صادق)</div>
+        <div class="subject-card" onclick="openLink('https://www.youtube.com/@h_alhashimi')">🧪 الكيمياء (حسين الهاشمي)</div>
+        <div class="subject-card" onclick="openLink('https://www.youtube.com/@mouayed79')">⚛️ الفيزياء (مؤيد سليم)</div>
+        <div class="subject-card" onclick="openLink('https://www.youtube.com/@salem-mansour')">🧬 الاحياء (سالم منصور)</div>
     </div>
 
-    <div id="chatSec" class="hidden">
-        <div class="chat-box">
-            <div id="msgArea" class="messages-area"></div>
-            <div class="chat-input">
-                <input type="text" id="messageInp" placeholder="اكتب رسالتك...">
-                <button onclick="sendMsg()" style="background:none; border:none; font-size:25px; cursor:pointer;">🚀</button>
+    <div id="class4Section" class="content-area">
+        <h2>قسم الشروحات - الرابع</h2>
+        <div class="subject-card" onclick="openLink('https://www.youtube.com/@RafalAlZubaidi')">✍️ اللغة العربية (رفل الزبيدي)</div>
+        <div class="subject-card" onclick="openLink('https://www.youtube.com/@ahmedfawzi-89')">🔤 اللغة الانكليزية (احمد فوزي)</div>
+        <div class="subject-card" onclick="openLink('https://www.youtube.com/@ali_sadiq')">📐 الرياضيات (علي صادق)</div>
+        <div class="subject-card" onclick="openLink('https://www.youtube.com/@h_alhashimi')">🧪 الكيمياء (حسين الهاشمي)</div>
+        <div class="subject-card" onclick="openLink('https://www.youtube.com/@mouayed79')">⚛️ الفيزياء (مؤيد سليم)</div>
+        <div class="subject-card" onclick="openLink('https://www.youtube.com/@salem-mansour')">🧬 الاحياء (سالم منصور)</div>
+    </div>
+
+    <div id="calcSection" class="content-area">
+        <h2>🖩 الحاسبة المدرسية</h2>
+        <div class="calculator">
+            <input type="text" id="display" class="calc-display" disabled>
+            <div class="calc-buttons">
+                <button class="calc-btn clr" onclick="clearDisplay()">C (مسح)</button>
+                <button class="calc-btn op" onclick="appendToDisplay('/')">÷</button>
+                <button class="calc-btn op" onclick="appendToDisplay('*')">×</button>
+                <button class="calc-btn" onclick="appendToDisplay('7')">7</button>
+                <button class="calc-btn" onclick="appendToDisplay('8')">8</button>
+                <button class="calc-btn" onclick="appendToDisplay('9')">9</button>
+                <button class="calc-btn op" onclick="appendToDisplay('-')">-</button>
+                <button class="calc-btn" onclick="appendToDisplay('4')">4</button>
+                <button class="calc-btn" onclick="appendToDisplay('5')">5</button>
+                <button class="calc-btn" onclick="appendToDisplay('6')">6</button>
+                <button class="calc-btn op" onclick="appendToDisplay('+')">+</button>
+                <button class="calc-btn" onclick="appendToDisplay('1')">1</button>
+                <button class="calc-btn" onclick="appendToDisplay('2')">2</button>
+                <button class="calc-btn" onclick="appendToDisplay('3')">3</button>
+                <button class="calc-btn eq" onclick="calculate()">=</button>
+                <button class="calc-btn" style="grid-column: span 2;" onclick="appendToDisplay('0')">0</button>
+                <button class="calc-btn" onclick="appendToDisplay('.')">.</button>
             </div>
         </div>
     </div>
+
+</div>
+
+<div class="footer">
+    تمتاز اعدادية المشروع للبنين بتاريخها و تمتاز بعدد طلابها الذين منذ تأسيسها و الى يومنا هذا قامو ليس فقط في الاكتفاء بـ النجاح لا بل بـ المعدلات فـ منهم من خرج طبيب و منهم من خرج مهندس و منهم من خرج معلم ووو و تمتاز بكادر تدريسي جيد و يعتبر الاول في القضاء و تكون بادارة المدير أ. علي عبد الحسين الغراني الذي اثبت نفسه بكل كفائة عالية و جميع الطلاب تعرفه بلطفه و كرمه عليهم
 </div>
 
 <script>
-    let currentRole = "";
-    let userImg = "https://cdn-icons-png.flaticon.com/512/149/149071.png";
-
-    function openForm(role) {
-        currentRole = role;
-        document.getElementById('startCard').classList.add('hidden');
-        document.getElementById('nameForm').classList.remove('hidden');
-    }
-
-    function saveUser() {
-        const name = document.getElementById('userNameInput').value;
-        if(!name) return alert("اكتب اسمك أولاً");
-        const data = { name, role: currentRole, img: userImg };
-        localStorage.setItem('user_school', JSON.stringify(data));
-        location.reload();
-    }
-
-    window.onload = function() {
-        const data = localStorage.getItem('user_school');
-        if(data) {
-            const user = JSON.parse(data);
-            document.getElementById('loginOverlay').style.display = 'none';
-            document.getElementById('displayUserName').innerText = user.name + " (" + user.role + ")";
-            document.getElementById('displayAvatar').src = user.img;
+    // وظيفة إظهار وإخفاء الجداول الفردية
+    function toggleSchedule(id) {
+        var element = document.getElementById(id);
+        if (element.style.display === "block") {
+            element.style.display = "none";
+        } else {
+            // إخفاء البقية أولاً (اختياري لجعل الشكل أرتب)
+            document.querySelectorAll('.schedule-container').forEach(el => el.style.display = 'none');
+            element.style.display = "block";
         }
     }
 
-    function changeAvatar() {
-        const file = document.getElementById('imgUpload').files[0];
-        const reader = new FileReader();
-        reader.onloadend = function() {
-            const data = JSON.parse(localStorage.getItem('user_school'));
-            data.img = reader.result;
-            localStorage.setItem('user_school', JSON.stringify(data));
-            document.getElementById('displayAvatar').src = reader.result;
-        }
-        if(file) reader.readAsDataURL(file);
+    function toggleTheme() {
+        const body = document.body;
+        const btn = document.getElementById('themeBtn');
+        body.classList.toggle('dark-mode');
+        btn.innerText = body.classList.contains('dark-mode') ? '☀️' : '🌙';
     }
 
-    function deleteAccount() {
-        if(confirm("هل تريد حذف حسابك نهائياً؟")) {
-            localStorage.removeItem('user_school');
-            location.reload();
-        }
+    function enterApp() {
+        document.getElementById('welcomeOverlay').style.display = 'none';
     }
 
-    function showSection(id) {
+    function openLink(url) { window.open(url, '_blank'); }
+    
+    function showSection(sectionId) {
         document.getElementById('mainMenu').style.display = 'none';
-        document.getElementById('profileView').style.display = 'none';
+        var areas = document.getElementsByClassName('content-area');
+        for(var i=0; i<areas.length; i++) { areas[i].style.display = 'none'; }
+        document.getElementById(sectionId).style.display = 'block';
         document.getElementById('backBtn').style.display = 'block';
-        document.getElementById(id).classList.remove('hidden');
     }
-
+    
     function goHome() {
-        location.reload(); // أسرع طريقة للعودة وتصفير الأقسام
+        document.getElementById('mainMenu').style.display = 'block';
+        var areas = document.getElementsByClassName('content-area');
+        for(var i=0; i<areas.length; i++) { areas[i].style.display = 'none'; }
+        document.getElementById('backBtn').style.display = 'none';
+        // إخفاء جداول المواد عند العودة
+        document.querySelectorAll('.schedule-container').forEach(el => el.style.display = 'none');
     }
-
-    function sendMsg() {
-        const inp = document.getElementById('messageInp');
-        const user = JSON.parse(localStorage.getItem('user_school'));
-        if(!inp.value) return;
-        const div = document.createElement('div');
-        div.className = 'msg';
-        div.innerHTML = `<img src="${user.img}" style="width:30px;height:30px;border-radius:50%"><div class="msg-text"><b>${user.name}</b><br>${inp.value}</div>`;
-        document.getElementById('msgArea').appendChild(div);
-        inp.value = "";
+    
+    function appendToDisplay(value) { document.getElementById('display').value += value; }
+    function clearDisplay() { document.getElementById('display').value = ''; }
+    function calculate() {
+        try { document.getElementById('display').value = eval(document.getElementById('display').value); }
+        catch (e) { document.getElementById('display').value = 'خطأ'; }
     }
 </script>
+
 </body>
 </html>
+
