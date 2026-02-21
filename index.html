@@ -123,7 +123,7 @@
             border: 2px solid var(--accent-color);
         }
 
-        /* واجهات الترحيب والاشتراك */
+        /* واجهة الترحيب والاشتراك */
         #welcomeOverlay {
             position: fixed;
             top: 0;
@@ -215,19 +215,9 @@
         }
         .content-area { display: none; width: 100%; }
         
-        /* تصميم زر "شرح مفصل للمادة" */
-        .detail-folder-btn {
-            background: #e67e22;
-            color: white;
-            padding: 18px;
-            margin-bottom: 15px;
-            border-radius: 12px;
-            text-align: center;
-            cursor: pointer;
-            font-weight: bold;
-            font-size: 18px;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-        }
+        .detail-folder-btn { background: #e67e22; color: white; padding: 18px; margin-bottom: 10px; border-radius: 12px; text-align: center; cursor: pointer; font-weight: bold; }
+        .pdf-folder-btn { background: #27ae60; color: white; padding: 18px; margin-bottom: 10px; border-radius: 12px; text-align: center; cursor: pointer; font-weight: bold; }
+        .books-folder-btn { background: #9b59b6; color: white; padding: 18px; margin-bottom: 15px; border-radius: 12px; text-align: center; cursor: pointer; font-weight: bold; }
 
         .teacher-card {
             background: var(--card-bg);
@@ -249,9 +239,20 @@
             border-right: 5px solid #3498db;
             cursor: pointer;
             color: var(--text-color);
-            display: none; /* مخفي افتراضياً داخل القسم */
+            display: none;
             animation: fadeIn 0.4s;
         }
+
+        .pdf-viewer-container {
+            display: none;
+            width: 100%;
+            background: #000;
+            border-radius: 10px;
+            margin-top: 10px;
+            overflow: hidden;
+            border: 2px solid var(--accent-color);
+        }
+        .pdf-viewer-container iframe { width: 100%; height: 600px; border: none; }
 
         .calculator { background: var(--calc-bg); padding: 20px; border-radius: 15px; margin-top: 20px; }
         .calc-display { width: 100%; height: 50px; background: #ecf0f1; border: none; border-radius: 5px; margin-bottom: 15px; text-align: left; padding: 10px; font-size: 20px; color: #333; }
@@ -272,9 +273,6 @@
             border-radius: 15px;
             border: 1px solid #ddd;
         }
-        h2 { text-align: center; color: var(--accent-color); }
-        .sub-section-btn { background: var(--accent-color); color: white; padding: 15px; margin-bottom: 10px; border-radius: 10px; text-align: center; cursor: pointer; font-weight: bold; }
-        .schedule-container { display: none; margin-bottom: 20px; }
 
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
     </style>
@@ -322,7 +320,7 @@
     </div>
 
     <div id="scheduleMainSection" class="content-area">
-        <h2>الجدول الأسبوعي للمراحل</h2>
+        <h2>📅 الجدول الأسبوعي</h2>
         <div class="sub-section-btn" onclick="toggleSchedule('sch6')">جدول السادس اعدادي</div>
         <div id="sch6" class="schedule-container">
             <table class="schedule-table">
@@ -337,83 +335,119 @@
             </table>
         </div>
         <div class="sub-section-btn" onclick="toggleSchedule('sch5')">جدول الخامس اعدادي</div>
-        <div id="sch5" class="schedule-container"><p style="text-align:center;">(سيتم إضافة الجدول قريباً)</p></div>
+        <div id="sch5" class="schedule-container"><p style="text-align:center;">(قريباً)</p></div>
         <div class="sub-section-btn" onclick="toggleSchedule('sch4')">جدول الرابع اعدادي</div>
-        <div id="sch4" class="schedule-container"><p style="text-align:center;">(سيتم إضافة الجدول قريباً)</p></div>
+        <div id="sch4" class="schedule-container"><p style="text-align:center;">(قريباً)</p></div>
     </div>
 
     <div id="teachersSection" class="content-area">
-        <h2>إدارة وكادر المدرسة</h2>
-        <a href="https://www.facebook.com/share/1FkBr4qyvv/" target="_blank" class="teacher-card">
-            <span>👑 <b>علي عبد الحسين</b> - المدير</span><span style="color:var(--facebook-color); font-size:12px;">فيسبوك ↗️</span>
-        </a>
-        <a href="https://t.me/ghth9" target="_blank" class="teacher-card">
-            <span>🤝 <b>غيث رعد</b> - المرشد التربوي</span><span style="color:var(--telegram-color); font-size:12px;">تليجرام ↗️</span>
-        </a>
-        <a href="https://t.me/Layth9" target="_blank" class="teacher-card">
-            <span>🔤 <b>ليث خميس</b> - إنجليزي</span><span style="color:var(--telegram-color); font-size:12px;">تليجرام ↗️</span>
-        </a>
-        <a href="https://t.me/YounisEng" target="_blank" class="teacher-card">
-            <span>🔤 <b>يونس الكدساوي</b> - إنجليزي</span><span style="color:var(--telegram-color); font-size:12px;">تليجرام ↗️</span>
-        </a>
-        <a href="https://t.me/ali2021m" target="_blank" class="teacher-card">
-            <span>📖 <b>محمد منديل</b> - عربي</span><span style="color:var(--telegram-color); font-size:12px;">تليجرام ↗️</span>
-        </a>
-        <a href="https://www.facebook.com/share/17wTbSvMMP/" target="_blank" class="teacher-card">
-            <span>📖 <b>سعد المعموري</b> - عربي</span><span style="color:var(--facebook-color); font-size:12px;">فيسبوك ↗️</span>
-        </a>
-        <a href="https://t.me/all0aa" target="_blank" class="teacher-card">
-            <span>📐 <b>علاء الكلابي</b> - رياضيات</span><span style="color:var(--telegram-color); font-size:12px;">تليجرام ↗️</span>
-        </a>
-        <a href="https://t.me/A91h5" target="_blank" class="teacher-card">
-            <span>⚛️ <b>احمد الخفاجي</b> - فيزياء</span><span style="color:var(--telegram-color); font-size:12px;">تليجرام ↗️</span>
-        </a>
-        <a href="https://t.me/alshmryahmed" target="_blank" class="teacher-card">
-            <span>⚛️ <b>احمد زغير الدهاجي</b> - فيزياء</span><span style="color:var(--telegram-color); font-size:12px;">تليجرام ↗️</span>
-        </a>
+        <h2>👨‍🏫 إدارة وكادر المدرسة</h2>
+        <a href="https://www.facebook.com/share/1FkBr4qyvv/" target="_blank" class="teacher-card"><span>👑 علي عبد الحسين - المدير</span></a>
+        <a href="https://t.me/ghth9" target="_blank" class="teacher-card"><span>🤝 غيث رعد - مرشد تربوي</span></a>
+        <a href="https://t.me/Layth9" target="_blank" class="teacher-card"><span>🔤 ليث خميس - إنجليزي</span></a>
+        <a href="https://t.me/YounisEng" target="_blank" class="teacher-card"><span>🔤 يونس الكدساوي - إنجليزي</span></a>
+        <a href="https://t.me/ali2021m" target="_blank" class="teacher-card"><span>📖 محمد منديل - عربي</span></a>
+        <a href="https://www.facebook.com/share/17wTbSvMMP/" target="_blank" class="teacher-card"><span>📖 سعد المعموري - عربي</span></a>
+        <a href="https://t.me/all0aa" target="_blank" class="teacher-card"><span>📐 علاء الكلابي - رياضيات</span></a>
+        <a href="https://t.me/A91h5" target="_blank" class="teacher-card"><span>⚛️ احمد الخفاجي - فيزياء</span></a>
+        <a href="https://t.me/alshmryahmed" target="_blank" class="teacher-card"><span>⚛️ احمد زغير الدهاجي - فيزياء</span></a>
     </div>
 
     <div id="class6Section" class="content-area">
         <h2>🎓 قسم السادس الإعدادي</h2>
-        <div class="detail-folder-btn" onclick="toggleDetail('subjects6')">📁 شرح مفصل للمادة</div>
+        <div class="detail-folder-btn" onclick="toggleDetail('subjects6')">📁 شرح مفصل للمادة (يوتيوب)</div>
         <div id="subjects6">
-            <div class="subject-card" onclick="openLink('https://youtube.com/@rafalalzubaide?si=p13r8Ry80gOI1_B-')">✍️ اللغة العربية (رفل الزبيدي)</div>
-            <div class="subject-card" onclick="openLink('https://youtube.com/@ahmedfawzi1?si=Cln-mDgiPgliGkDd')">🔤 اللغة الانكليزية (احمد فوزي)</div>
-            <div class="subject-card" onclick="openLink('https://youtube.com/@haider_waleed?si=W8XWyS5GLJuAzSG0')">📐 الرياضيات (حيدر وليد)</div>
-            <div class="subject-card" onclick="openLink('https://youtube.com/channel/UCkLv2woCjIWzk2k9bqKQTHA?si=gv57JFppMCCx6shB')">🧪 الكيمياء (مدرس الكيمياء)</div>
-            <div class="subject-card" onclick="openLink('https://youtube.com/@mouid92?si=daQEuSRMw6_Yh8Lu')">⚛️ الفيزياء (مؤيد سليم)</div>
-            <div class="subject-card" onclick="openLink('https://youtube.com/@salim_almansour?si=utRNpQlZUeurZB3J')">🧬 الاحياء (سالم منصور)</div>
+            <div class="subject-card" onclick="openLink('https://youtube.com/@rafalalzubaide')">✍️ اللغة العربية - رفال الزبيدي</div>
+            <div class="subject-card" onclick="openLink('https://youtube.com/@EnglishwithWaleed')">🔤 اللغة الانجليزية - وليد الخفاجي</div>
+            <div class="subject-card" onclick="openLink('https://youtube.com/@حيدروليد')">📐 الرياضيات - حيدر وليد</div>
+            <div class="subject-card" onclick="openLink('https://youtube.com/@moe_physics')">⚛️ الفيزياء - مؤيد سليم</div>
+            <div class="subject-card" onclick="openLink('https://youtube.com/@Hussein_Al_Hamidi')">⚗️ الكيمياء - حسين حمزة</div>
+        </div>
+        <div class="pdf-folder-btn" onclick="toggleDetail('pdf6')">📚 قسم الملازم الدراسية</div>
+        <div id="pdf6"></div>
+        <div class="books-folder-btn" onclick="toggleDetail('books6')">📚 قسم الكتب المدرسية</div>
+        <div id="books6">
+            <div class="subject-card" onclick="viewInternalPDF('https://drive.google.com/file/d/1Dal3N5I_lbRIHa4YkZc6B6VC6FwubuPa/preview')">📕 كتاب الاحياء</div>
+            <div class="subject-card" onclick="viewInternalPDF('https://drive.google.com/file/d/1-TCnj-F_1GN9f15t5wQRSM2AlDGY88fY/preview')">📕 كتاب الرياضيات</div>
+            <div class="subject-card" onclick="viewInternalPDF('https://drive.google.com/file/d/15Z6LkbfIH0_CZBfkK7xsBHs5PUM34i6V/preview')">📕 كتاب الفيزياء</div>
+            <div class="subject-card" onclick="viewInternalPDF('https://drive.google.com/file/d/1GQjNO4kBMGOnl4hH8FfHroYI2HZZiUCX/preview')">📕 كتاب الكيمياء</div>
+            <div class="subject-card" onclick="viewInternalPDF('https://drive.google.com/file/d/1npWPyINqC7oAVjd53Et1oIyLato2M0u7/preview')">📕 كتاب العربي ج1</div>
+            <div class="subject-card" onclick="viewInternalPDF('https://drive.google.com/file/d/1-misPsZg8AVx5gyZxromlEdkdhj90nnY/preview')">📕 كتاب العربي ج2</div>
+            <div class="subject-card" onclick="viewInternalPDF('https://drive.google.com/file/d/1GvX2CHFCCrALkHZUDolHj3ozmQGn0OOc/preview')">📕 كتاب انكليزي النشاط ج1</div>
+            <div class="subject-card" onclick="viewInternalPDF('https://drive.google.com/file/d/134EqdOdZO0It79z9ROMvxKqsRN33LbRf/preview')">📕 كتاب الانكليزي الملون ج1</div>
+            <div class="subject-card" onclick="viewInternalPDF('https://drive.google.com/file/d/1Q975xvcPpal65W_zcwsB5h_R5Ru4uZpK/preview')">📕 كتاب الاقتصاد</div>
+            <div class="subject-card" onclick="viewInternalPDF('https://drive.google.com/file/d/1i1WOfSdIudoU1EcXWDHA1s2lEeNJqIQr/preview')">📕 كتاب التاريخ</div>
+            <div class="subject-card" onclick="viewInternalPDF('https://drive.google.com/file/d/1dHRv1L8jMf7S_zl0KN_eJWUb793bysIR/preview')">📕 كتاب الجغرافية</div>
         </div>
     </div>
 
     <div id="class5Section" class="content-area">
         <h2>📘 قسم الخامس الإعدادي</h2>
-        <div class="detail-folder-btn" onclick="toggleDetail('subjects5')">📁 شرح مفصل للمادة</div>
+        <div class="detail-folder-btn" onclick="toggleDetail('subjects5')">📁 شرح مفصل للمادة (يوتيوب)</div>
         <div id="subjects5">
-            <div class="subject-card" onclick="openLink('https://youtube.com/@rafalalzubaide?si=p13r8Ry80gOI1_B-')">✍️ اللغة العربية</div>
-            <div class="subject-card" onclick="openLink('https://youtube.com/@ahmedfawzi1?si=Cln-mDgiPgliGkDd')">🔤 اللغة الانكليزية</div>
-            <div class="subject-card" onclick="openLink('https://youtube.com/@haider_waleed?si=W8XWyS5GLJuAzSG0')">📐 الرياضيات</div>
-            <div class="subject-card" onclick="openLink('https://youtube.com/channel/UCkLv2woCjIWzk2k9bqKQTHA?si=gv57JFppMCCx6shB')">🧪 الكيمياء</div>
-            <div class="subject-card" onclick="openLink('https://youtube.com/@mouid92?si=daQEuSRMw6_Yh8Lu')">⚛️ الفيزياء</div>
-            <div class="subject-card" onclick="openLink('https://youtube.com/@salim_almansour?si=utRNpQlZUeurZB3J')">🧬 الاحياء</div>
+            <div class="subject-card" onclick="openLink('https://youtube.com/@Ahmed-Al-Kinani')">✍️ اللغة العربية - أحمد الكناني</div>
+            <div class="subject-card" onclick="openLink('https://youtube.com/@EnglishwithWaleed')">🔤 اللغة الانجليزية - وليد الخفاجي</div>
+            <div class="subject-card" onclick="openLink('https://youtube.com/@حيدروليد')">📐 الرياضيات - حيدر وليد</div>
+            <div class="subject-card" onclick="openLink('https://youtube.com/@Ali-Thahabi')">⚛️ الفيزياء - علي الذهبي</div>
+        </div>
+        <div class="pdf-folder-btn" onclick="toggleDetail('pdf5')">📚 قسم الملازم الدراسية</div>
+        <div id="pdf5"></div>
+        <div class="books-folder-btn" onclick="toggleDetail('books5')">📚 قسم الكتب المدرسية</div>
+        <div id="books5">
+            <div class="subject-card" onclick="viewInternalPDF('https://drive.google.com/file/d/1-oVX3-xViTl5M2omQY2GfT7pf5MBPTxf/preview')">📕 كتاب الاسلامية</div>
+            <div class="subject-card" onclick="viewInternalPDF('https://drive.google.com/file/d/1HS1Ht-QOS9IqR-6ckHMN6OH_AQJj7ZAe/preview')">📕 كتاب العربي ج1</div>
+            <div class="subject-card" onclick="viewInternalPDF('https://drive.google.com/file/d/1jwwZby49gCCRMd2uTGkx306218r8_Qfv/preview')">📕 كتاب العربي ج2</div>
+            <div class="subject-card" onclick="viewInternalPDF('https://drive.google.com/file/d/1nB-t4HPUOQMuOJe7-zlJKR-z0gdVXPoP/preview')">📕 كتاب الانكليزي الملون</div>
+            <div class="subject-card" onclick="viewInternalPDF('https://drive.google.com/file/d/1mFB_q4FoaYPq3d4b0Vv8pQufaVzjR7zl/preview')">📕 كتاب الانكليزي النشاط</div>
+            <div class="subject-card" onclick="viewInternalPDF('https://drive.google.com/file/d/1sCCnN4tpl58dz6G4oENwp-W2UzhcDnnn/preview')">📕 كتاب الرياضيات</div>
+            <div class="subject-card" onclick="viewInternalPDF('https://drive.google.com/file/d/1zupc3KsmJk-5SWvkNX23pnSo_bimjlRu/preview')">📕 كتاب الكيمياء</div>
+            <div class="subject-card" onclick="viewInternalPDF('https://drive.google.com/file/d/1d0yzPYpVn-hS_IFexnp9btO1wjXPZReP/preview')">📕 كتاب الفيزياء</div>
+            <div class="subject-card" onclick="viewInternalPDF('https://drive.google.com/file/d/1OJTdagRdQ1D-KV9mzR0_EDfVRmm1RQJo/preview')">📕 كتاب الاحياء</div>
+            <div class="subject-card" onclick="viewInternalPDF('https://drive.google.com/file/d/1fKrfeiH4NzxkRLlIBRYnX1C3X0ycf4R3/preview')">📕 كتاب الاقتصاد</div>
+            <div class="subject-card" onclick="viewInternalPDF('https://drive.google.com/file/d/1Q912rnnuggYj2qU3sOQkchIkwVW8401Y/preview')">📕 كتاب التاريخ</div>
+            <div class="subject-card" onclick="viewInternalPDF('https://drive.google.com/file/d/1a973adwRE7Oh2gcnDX2irkLQvHxSzsek/preview')">📕 كتاب الجغرافية</div>
+            <div class="subject-card" onclick="viewInternalPDF('https://drive.google.com/file/d/1j6jVsoIqhJ1wKJ1DPt5ooJraTJMcUuQa/preview')">📕 كتاب الحاسوب</div>
+            <div class="subject-card" onclick="viewInternalPDF('https://drive.google.com/file/d/16GAl1FqIWa9rmoF5RUuApYwYQKqBagBF/preview')">📕 كتاب الفلسفة</div>
         </div>
     </div>
 
     <div id="class4Section" class="content-area">
         <h2>📙 قسم الرابع الإعدادي</h2>
-        <div class="detail-folder-btn" onclick="toggleDetail('subjects4')">📁 شرح مفصل للمادة</div>
+        <div class="detail-folder-btn" onclick="toggleDetail('subjects4')">📁 شرح مفصل للمادة (يوتيوب)</div>
         <div id="subjects4">
-            <div class="subject-card" onclick="openLink('https://youtube.com/@rafalalzubaide?si=p13r8Ry80gOI1_B-')">✍️ اللغة العربية</div>
-            <div class="subject-card" onclick="openLink('https://youtube.com/@ahmedfawzi1?si=Cln-mDgiPgliGkDd')">🔤 اللغة الانكليزية</div>
-            <div class="subject-card" onclick="openLink('https://youtube.com/@haider_waleed?si=W8XWyS5GLJuAzSG0')">📐 الرياضيات</div>
-            <div class="subject-card" onclick="openLink('https://youtube.com/channel/UCkLv2woCjIWzk2k9bqKQTHA?si=gv57JFppMCCx6shB')">🧪 الكيمياء</div>
-            <div class="subject-card" onclick="openLink('https://youtube.com/@mouid92?si=daQEuSRMw6_Yh8Lu')">⚛️ الفيزياء</div>
-            <div class="subject-card" onclick="openLink('https://youtube.com/@salim_almansour?si=utRNpQlZUeurZB3J')">🧬 الاحياء</div>
+            <div class="subject-card" onclick="openLink('https://youtube.com/@Ahmed-Al-Kinani')">✍️ اللغة العربية - أحمد الكناني</div>
+            <div class="subject-card" onclick="openLink('https://youtube.com/@EnglishwithWaleed')">🔤 اللغة الانجليزية - وليد الخفاجي</div>
+            <div class="subject-card" onclick="openLink('https://youtube.com/@حيدروليد')">📐 الرياضيات - حيدر وليد</div>
+            <div class="subject-card" onclick="openLink('https://youtube.com/@Ali-Thahabi')">⚛️ الفيزياء - علي الذهبي</div>
+        </div>
+        <div class="pdf-folder-btn" onclick="toggleDetail('pdf4')">📚 قسم الملازم الدراسية</div>
+        <div id="pdf4"></div>
+        <div class="books-folder-btn" onclick="toggleDetail('books4')">📚 قسم الكتب المدرسية</div>
+        <div id="books4">
+            <div class="subject-card" onclick="viewInternalPDF('https://drive.google.com/file/d/1iZHc5m2u2bdPQQ9Ukp6s_U1XPfjzRbFT/preview')">📕 كتاب الاسلامية</div>
+            <div class="subject-card" onclick="viewInternalPDF('https://drive.google.com/file/d/1i-yxColnzTHHsNMTOerHoTOt-xsEDE3P/preview')">📕 كتاب الاحياء</div>
+            <div class="subject-card" onclick="viewInternalPDF('https://drive.google.com/file/d/1FBtYbEYr3b5WuoKQDbmHGFxTV9sMcV3U/preview')">📕 كتاب التاريخ</div>
+            <div class="subject-card" onclick="viewInternalPDF('https://drive.google.com/file/d/1dp1rPRF18ZbeRx_BETeTQbTvs-JRyvQO/preview')">📕 كتاب الجغرافية</div>
+            <div class="subject-card" onclick="viewInternalPDF('https://drive.google.com/file/d/1e4Q188XzHt2BL-T5_EQVsoCd-h6lgSnE/preview')">📕 كتاب الحاسوب</div>
+            <div class="subject-card" onclick="viewInternalPDF('https://drive.google.com/file/d/1omwW1NoovcTjkL1_wSjXpeEAmwkPrf7o/preview')">📕 كتاب الرياضيات</div>
+            <div class="subject-card" onclick="viewInternalPDF('https://drive.google.com/file/d/1IQsK7b4chrIlz_q0tXLstoLggovOz-oB/preview')">📕 كتاب الفيزياء</div>
+            <div class="subject-card" onclick="viewInternalPDF('https://drive.google.com/file/d/1AeNrhz4VRdtbn0zju2p8BbWn5Y_hvg2E/preview')">📕 كتاب الكيمياء</div>
+            <div class="subject-card" onclick="viewInternalPDF('https://drive.google.com/file/d/1GXvyLC5zow-eFbhLmQ2Jt3EANQl9__yD/preview')">📕 كتاب علم الاجتماع</div>
+            <div class="subject-card" onclick="viewInternalPDF('https://drive.google.com/file/d/1iiPrR4Rp8EvDgmaeiJ1fa0YUnJFntaBZ/preview')">📕 كتاب انكليزي ملون</div>
+            <div class="subject-card" onclick="viewInternalPDF('https://drive.google.com/file/d/1IIqJZmr9EO5zj4ylrSeJJs1ohAU_qcDE/preview')">📕 كتاب انكليزي نشاط</div>
+            <div class="subject-card" onclick="viewInternalPDF('https://drive.google.com/file/d/1lYTqwZ49Bj32RC5-ELP15vaISD2NSJPv/preview')">📕 كتاب العربي ج1</div>
+            <div class="subject-card" onclick="viewInternalPDF('https://drive.google.com/file/d/1YGCVcQbC2xTEr82Oc-U7C-epW0Kv_TfO/preview')">📕 كتاب العربي ج2</div>
+            <div class="subject-card" onclick="viewInternalPDF('https://drive.google.com/file/d/1jZo_Y3pZFUhtQFj_bJqW4I2qHXchug83/preview')">📕 كتاب جرائم البعث اللعين</div>
         </div>
     </div>
 
+    <div id="pdfViewer" class="pdf-viewer-container">
+        <div style="background:var(--accent-color); color:white; padding:10px; text-align:center; cursor:pointer;" onclick="closePDF()">❌ إغلاق المعاينة</div>
+        <iframe id="pdfIframe" src=""></iframe>
+    </div>
+
     <div id="calcSection" class="content-area">
-        <h2>🖩 الحاسبة المدرسية</h2>
+        <h2>🖩 الحاسبة</h2>
         <div class="calculator">
             <input type="text" id="display" class="calc-display" disabled>
             <div class="calc-buttons">
@@ -445,59 +479,24 @@
 
 <script>
     window.onload = function() {
-        const savedName = localStorage.getItem('school_user_name');
-        const savedAvatar = localStorage.getItem('school_user_avatar');
-        if (savedName) document.getElementById('userNameDisplay').innerText = savedName;
-        if (savedAvatar) document.getElementById('userAvatar').src = savedAvatar;
+        const n = localStorage.getItem('school_user_name');
+        const a = localStorage.getItem('school_user_avatar');
+        if (n) document.getElementById('userNameDisplay').innerText = n;
+        if (a) document.getElementById('userAvatar').src = a;
     }
 
-    function showSubPage() {
-        document.getElementById('welcomeOverlay').style.display = 'none';
-        document.getElementById('subscriptionOverlay').style.display = 'flex';
-    }
-
-    function enterApp() {
-        document.getElementById('subscriptionOverlay').style.display = 'none';
-        if (!localStorage.getItem('school_user_name')) updateName();
-    }
-
-    function updateName() {
-        const newName = prompt("أدخل اسمك:");
-        if (newName && newName.trim() !== "") {
-            localStorage.setItem('school_user_name', newName);
-            document.getElementById('userNameDisplay').innerText = newName;
-        }
-    }
-
-    function updateAvatar(event) {
-        const file = event.target.files[0];
-        if (file) {
-            const reader = new FileReader();
-            reader.onload = function(e) {
-                localStorage.setItem('school_user_avatar', e.target.result);
-                document.getElementById('userAvatar').src = e.target.result;
-            };
-            reader.readAsDataURL(file);
-        }
-    }
-
-    function toggleTheme() {
-        document.body.classList.toggle('dark-mode');
-        document.getElementById('themeBtn').innerText = document.body.classList.contains('dark-mode') ? '☀️' : '🌙';
-    }
-
-    function openLink(url) { window.open(url, '_blank'); }
+    function showSubPage() { document.getElementById('welcomeOverlay').style.display = 'none'; document.getElementById('subscriptionOverlay').style.display = 'flex'; }
+    function enterApp() { document.getElementById('subscriptionOverlay').style.display = 'none'; if (!localStorage.getItem('school_user_name')) updateName(); }
+    function updateName() { const n = prompt("أدخل اسمك:"); if (n) { localStorage.setItem('school_user_name', n); document.getElementById('userNameDisplay').innerText = n; } }
+    function updateAvatar(e) { const f = e.target.files[0]; if (f) { const r = new FileReader(); r.onload = function(x) { localStorage.setItem('school_user_avatar', x.target.result); document.getElementById('userAvatar').src = x.target.result; }; r.readAsDataURL(f); } }
+    function toggleTheme() { document.body.classList.toggle('dark-mode'); }
+    function openLink(u) { window.open(u, '_blank'); }
     
     function showSection(id) {
         document.getElementById('mainMenu').style.display = 'none';
         document.getElementById('userProfileArea').style.display = 'none';
         var areas = document.getElementsByClassName('content-area');
-        for(var i=0; i<areas.length; i++) { 
-            areas[i].style.display = 'none';
-            // إخفاء المواد عند الدخول لقسم جديد لضمان بقاء الزر مغلقاً
-            var nestedSub = areas[i].querySelectorAll('.subject-card');
-            nestedSub.forEach(s => s.style.display = 'none');
-        }
+        for(var i=0; i<areas.length; i++) { areas[i].style.display = 'none'; }
         document.getElementById(id).style.display = 'block';
         document.getElementById('backBtn').style.display = 'block';
     }
@@ -508,28 +507,27 @@
         var areas = document.getElementsByClassName('content-area');
         for(var i=0; i<areas.length; i++) { areas[i].style.display = 'none'; }
         document.getElementById('backBtn').style.display = 'none';
+        closePDF();
     }
 
-    // وظيفة فتح وإغلاق "شرح مفصل للمادة"
-    function toggleDetail(parentID) {
-        var parent = document.getElementById(parentID);
-        var cards = parent.querySelectorAll('.subject-card');
-        cards.forEach(card => {
-            card.style.display = (card.style.display === 'flex' || card.style.display === 'block') ? 'none' : 'block';
-        });
+    function toggleDetail(pID) {
+        var p = document.getElementById(pID);
+        var c = p.querySelectorAll('.subject-card');
+        c.forEach(x => { x.style.display = (x.style.display === 'block') ? 'none' : 'block'; });
     }
 
+    function viewInternalPDF(u) {
+        const v = document.getElementById('pdfViewer');
+        document.getElementById('pdfIframe').src = u;
+        v.style.display = 'block';
+        v.scrollIntoView({ behavior: 'smooth' });
+    }
+
+    function closePDF() { document.getElementById('pdfViewer').style.display = 'none'; document.getElementById('pdfIframe').src = ""; }
     function appendToDisplay(v) { document.getElementById('display').value += v; }
     function clearDisplay() { document.getElementById('display').value = ''; }
-    function calculate() {
-        try { document.getElementById('display').value = eval(document.getElementById('display').value); }
-        catch (e) { document.getElementById('display').value = 'خطأ'; }
-    }
-    function toggleSchedule(id) {
-        var el = document.getElementById(id);
-        document.querySelectorAll('.schedule-container').forEach(s => s.style.display = 'none');
-        el.style.display = (el.style.display === "block") ? "none" : "block";
-    }
+    function calculate() { try { document.getElementById('display').value = eval(document.getElementById('display').value); } catch (e) { document.getElementById('display').value = 'خطأ'; } }
+    function toggleSchedule(id) { var el = document.getElementById(id); document.querySelectorAll('.schedule-container').forEach(s => s.style.display = 'none'); el.style.display = (el.style.display === "block") ? "none" : "block"; }
 </script>
 </body>
-</html>
+    </html>
