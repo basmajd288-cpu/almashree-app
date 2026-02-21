@@ -101,13 +101,59 @@
             font-size: 16px;
             cursor: pointer;
         }
+        /* تصميم الحاسبة */
+        .calculator {
+            background: #34495e;
+            padding: 20px;
+            border-radius: 15px;
+            margin-top: 20px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+        }
+        .calc-display {
+            width: 100%;
+            height: 50px;
+            background: #ecf0f1;
+            border: none;
+            border-radius: 5px;
+            margin-bottom: 15px;
+            text-align: left;
+            padding: 10px;
+            font-size: 20px;
+            font-weight: bold;
+            box-sizing: border-box;
+        }
+        .calc-buttons {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+        }
+        .calc-btn {
+            padding: 15px;
+            font-size: 18px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            background: #7f8c8d;
+            color: white;
+            transition: background 0.2s;
+        }
+        .calc-btn:hover { background: #95a5a6; }
+        .calc-btn.op { background: #e67e22; }
+        .calc-btn.eq { background: #27ae60; grid-column: span 2; }
+        .calc-btn.clr { background: #e74c3c; grid-column: span 2; }
+
         .link-label { font-size: 12px; font-weight: bold; }
         .footer {
-            margin-top: 20px;
+            margin: 30px 10px;
             padding: 20px;
-            font-size: 12px;
-            color: #888;
+            font-size: 14px;
+            line-height: 1.6;
+            color: #555;
             text-align: center;
+            background: #fff;
+            border-radius: 15px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            border: 1px solid #ddd;
         }
         h2 { text-align: center; color: var(--primary-color); }
     </style>
@@ -124,59 +170,43 @@
         <div class="section-card" onclick="showSection('class6Section')">🎓 السادس الإعدادي <span>⬅️</span></div>
         <div class="section-card" onclick="showSection('class5Section')">📘 الخامس الإعدادي <span>⬅️</span></div>
         <div class="section-card" onclick="showSection('class4Section')">📙 الرابع الإعدادي <span>⬅️</span></div>
+        <div class="section-card" onclick="showSection('calcSection')" style="border-right-color: #9b59b6;">🖩 الحاسبة المدرسية <span>⬅️</span></div>
     </div>
 
     <div id="teachersSection" class="content-area">
         <h2>إدارة وكادر المدرسة</h2>
-        
         <a href="https://www.facebook.com/share/1FkBr4qyvv/" target="_blank" class="teacher-card">
             <span>👑 <b>علي عبد الحسين</b> - المدير</span>
             <span class="link-label" style="color: var(--facebook-color);">فيسبوك ↗️</span>
         </a>
-
         <a href="https://t.me/ghth9" target="_blank" class="teacher-card">
             <span>🤝 <b>غيث رعد</b> - المرشد التربوي</span>
             <span class="link-label" style="color: var(--telegram-color);">تليجرام ↗️</span>
         </a>
-
         <a href="https://t.me/Layth9" target="_blank" class="teacher-card">
             <span>🔤 <b>ليث خميس</b> - إنجليزي</span>
             <span class="link-label" style="color: var(--telegram-color);">تليجرام ↗️</span>
         </a>
-
         <a href="https://t.me/YounisEng" target="_blank" class="teacher-card">
             <span>🔤 <b>يونس الكدساوي</b> - إنجليزي</span>
             <span class="link-label" style="color: var(--telegram-color);">تليجرام ↗️</span>
         </a>
-
         <a href="https://t.me/ali2021m" target="_blank" class="teacher-card">
             <span>📖 <b>محمد منديل</b> - لغة عربية</span>
             <span class="link-label" style="color: var(--telegram-color);">تليجرام ↗️</span>
         </a>
-
         <a href="https://www.facebook.com/share/17wTbSvMMP/" target="_blank" class="teacher-card">
             <span>📖 <b>سعد المعموري</b> - لغة عربية</span>
             <span class="link-label" style="color: var(--facebook-color);">فيسبوك ↗️</span>
         </a>
-
-        <div class="teacher-card" style="cursor: default; border-right-color: #ccc;">
-            <span>📖 <b>مرتضى المعموري</b> - لغة عربية</span>
-        </div>
-
-        <div class="teacher-card" style="cursor: default; border-right-color: #ccc;">
-            <span>🕌 <b>محمد الدليمي</b> - تربية إسلامية</span>
-        </div>
-
         <a href="https://t.me/all0aa" target="_blank" class="teacher-card">
             <span>📐 <b>علاء الكلابي</b> - رياضيات</span>
             <span class="link-label" style="color: var(--telegram-color);">تليجرام ↗️</span>
         </a>
-
         <a href="https://t.me/A91h5" target="_blank" class="teacher-card">
             <span>⚛️ <b>احمد الخفاجي</b> - فيزياء</span>
             <span class="link-label" style="color: var(--telegram-color);">تليجرام ↗️</span>
         </a>
-
         <a href="https://t.me/alshmryahmed" target="_blank" class="teacher-card">
             <span>⚛️ <b>احمد زغير الدهاجي</b> - فيزياء</span>
             <span class="link-label" style="color: var(--telegram-color);">تليجرام ↗️</span>
@@ -213,31 +243,58 @@
         <div class="subject-card" onclick="openLink('https://www.youtube.com/@salem-mansour')">🧬 الاحياء (سالم منصور)</div>
     </div>
 
+    <div id="calcSection" class="content-area">
+        <h2>🖩 الحاسبة المدرسية</h2>
+        <div class="calculator">
+            <input type="text" id="display" class="calc-display" disabled>
+            <div class="calc-buttons">
+                <button class="calc-btn clr" onclick="clearDisplay()">C (مسح)</button>
+                <button class="calc-btn op" onclick="appendToDisplay('/')">÷</button>
+                <button class="calc-btn op" onclick="appendToDisplay('*')">×</button>
+                <button class="calc-btn" onclick="appendToDisplay('7')">7</button>
+                <button class="calc-btn" onclick="appendToDisplay('8')">8</button>
+                <button class="calc-btn" onclick="appendToDisplay('9')">9</button>
+                <button class="calc-btn op" onclick="appendToDisplay('-')">-</button>
+                <button class="calc-btn" onclick="appendToDisplay('4')">4</button>
+                <button class="calc-btn" onclick="appendToDisplay('5')">5</button>
+                <button class="calc-btn" onclick="appendToDisplay('6')">6</button>
+                <button class="calc-btn op" onclick="appendToDisplay('+')">+</button>
+                <button class="calc-btn" onclick="appendToDisplay('1')">1</button>
+                <button class="calc-btn" onclick="appendToDisplay('2')">2</button>
+                <button class="calc-btn" onclick="appendToDisplay('3')">3</button>
+                <button class="calc-btn eq" onclick="calculate()">=</button>
+                <button class="calc-btn" style="grid-column: span 2;" onclick="appendToDisplay('0')">0</button>
+                <button class="calc-btn" onclick="appendToDisplay('.')">.</button>
+            </div>
+        </div>
+    </div>
+
 </div>
 
 <div class="footer">
-    تم تطوير التطبيق لخدمة طلاب إعدادية المشروع للبنين
+    تمتاز اعدادية المشروع للبنين بتاريخها و تمتاز بعدد طلابها الذين منذ تأسيسها و الى يومنا هذا قامو ليس فقط في الاكتفاء بـ النجاح لا بل بـ المعدلات فـ منهم من خرج طبيب و منهم من خرج مهندس و منهم من خرج معلم ووو و تمتاز بكادر تدريسي جيد و يعتبر الاول في القضاء و تكون بادارة المدير أ. علي عبد الحسين الغراني الذي اثبت نفسه بكل كفائة عالية و جميع الطلاب تعرفه بلطفه و كرمه عليهم
 </div>
 
 <script>
-    function openLink(url) {
-        window.open(url, '_blank');
-    }
-
+    function openLink(url) { window.open(url, '_blank'); }
     function showSection(sectionId) {
         document.getElementById('mainMenu').style.display = 'none';
         var areas = document.getElementsByClassName('content-area');
         for(var i=0; i<areas.length; i++) { areas[i].style.display = 'none'; }
-        
         document.getElementById(sectionId).style.display = 'block';
         document.getElementById('backBtn').style.display = 'block';
     }
-
     function goHome() {
         document.getElementById('mainMenu').style.display = 'block';
         var areas = document.getElementsByClassName('content-area');
         for(var i=0; i<areas.length; i++) { areas[i].style.display = 'none'; }
         document.getElementById('backBtn').style.display = 'none';
+    }
+    function appendToDisplay(value) { document.getElementById('display').value += value; }
+    function clearDisplay() { document.getElementById('display').value = ''; }
+    function calculate() {
+        try { document.getElementById('display').value = eval(document.getElementById('display').value); }
+        catch (e) { document.getElementById('display').value = 'خطأ'; }
     }
 </script>
 
