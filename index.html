@@ -10,22 +10,18 @@
             --accent-color: #3498db;
             --bg-color: #f8f9fa;
             --text-color: #333;
-            --telegram-color: #0088cc;
             --facebook-color: #3b5998;
         }
 
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: var(--bg-color);
+        body, html {
             margin: 0;
             padding: 0;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            overflow-x: hidden;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            height: 100%;
         }
 
-        /* 1. شاشة الترحيب السوداء (Splash Screen) */
+        /* شاشة الترحيب السوداء */
         #splashScreen {
             position: fixed;
             top: 0;
@@ -40,108 +36,66 @@
             z-index: 10000;
         }
         #splashScreen img {
-            width: 200px;
+            width: 180px;
             height: auto;
-            margin-bottom: 30px;
-            border-radius: 50%;
-            box-shadow: 0 0 20px rgba(255, 215, 0, 0.3);
+            margin-bottom: 40px;
+            border-radius: 20px;
         }
         .start-btn {
             background: linear-gradient(45deg, #f1c40f, #f39c12);
             color: #000;
-            padding: 15px 40px;
+            padding: 15px 50px;
             border: none;
             border-radius: 30px;
             font-size: 20px;
             font-weight: bold;
             cursor: pointer;
-            transition: 0.3s;
-        }
-        .start-btn:hover { transform: scale(1.1); }
-
-        /* 2. واجهة الاشتراك الإجباري */
-        #subscriptionOverlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.9);
-            display: none; 
-            justify-content: center;
-            align-items: center;
-            z-index: 9999;
-            text-align: center;
-        }
-        .sub-content {
-            background: white;
-            padding: 30px;
-            border-radius: 20px;
-            width: 85%;
-            max-width: 400px;
-        }
-        .sub-btn {
-            background-color: var(--facebook-color);
-            color: white;
-            padding: 15px 30px;
-            text-decoration: none;
-            display: inline-block;
-            border-radius: 10px;
-            font-weight: bold;
-            margin: 15px 0;
-        }
-        .enter-btn {
-            background: #27ae60;
-            color: white;
-            border: none;
-            padding: 12px 20px;
-            border-radius: 8px;
-            cursor: pointer;
-            display: none;
-            width: 100%;
+            box-shadow: 0 4px 15px rgba(241, 196, 15, 0.4);
         }
 
-        /* تنسيق التطبيق الرئيسي */
+        /* واجهة التطبيق */
         header {
             background-color: var(--primary-color);
             color: white;
-            width: 100%;
-            padding: 20px 0;
+            padding: 20px;
             text-align: center;
             font-size: 22px;
             border-bottom: 4px solid var(--accent-color);
         }
-        .container { width: 95%; max-width: 500px; margin-top: 20px; }
+        .container { padding: 20px; max-width: 500px; margin: auto; }
         .section-card {
             background: white;
+            padding: 20px;
             margin-bottom: 15px;
-            padding: 18px;
             border-radius: 12px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-            cursor: pointer;
+            border-right: 6px solid var(--accent-color);
             display: flex;
             justify-content: space-between;
-            border-right: 6px solid var(--accent-color);
             font-weight: bold;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            cursor: pointer;
+            transition: 0.2s;
         }
+        .section-card:hover { background-color: #f1f7ff; }
+        .content-area { display: none; }
         .btn-back {
-            background-color: #e74c3c;
+            background: #e74c3c;
             color: white;
-            border: none;
-            padding: 12px;
             width: 100%;
+            padding: 12px;
+            border: none;
             border-radius: 8px;
             margin-bottom: 20px;
             display: none;
+            cursor: pointer;
+            font-weight: bold;
         }
-        .content-area { display: none; width: 100%; }
         .footer {
-            margin: 30px 10px;
+            margin-top: 30px;
             padding: 20px;
-            font-size: 14px;
             text-align: center;
-            background: #fff;
-            border-radius: 15px;
+            font-size: 14px;
+            color: #777;
         }
     </style>
 </head>
@@ -149,78 +103,70 @@
 
 <div id="splashScreen">
     <img src="https://i.ibb.co/hR8YVvS/FB-IMG-1771655708382.jpg" alt="Logo">
-    <button class="start-btn" onclick="exitSplash()">استخدام التطبيق</button>
+    <button class="start-btn" onclick="enterApp()">استخدام التطبيق</button>
 </div>
 
-<div id="subscriptionOverlay">
-    <div class="sub-content">
-        <h2 style="color: var(--primary-color);">📢 تنبيه</h2>
-        <p>اشترك في قناة التطبيق لكي تتمكن من استخدامه</p>
-        <a href="https://www.facebook.com/share/1CTdgSd6NK/" target="_blank" class="sub-btn" onclick="showFinalBtn()">🔔 اشترك</a>
-        <button id="finalEnterBtn" class="enter-btn" onclick="completeSubscription()">تم الاشتراك، دخول التطبيق ✅</button>
-    </div>
-</div>
-
-<header>🏫 إعدادية المشروع للبنين</header>
-
-<div class="container">
-    <button id="backBtn" class="btn-back" onclick="goHome()">🏠 العودة للقائمة الرئيسية</button>
-
-    <div id="mainMenu">
-        <div class="section-card" onclick="showSection('teachersSection')">👨‍🏫 كادر المدرسين <span>⬅️</span></div>
-        <div class="section-card" onclick="showSection('class6Section')">🎓 السادس الإعدادي <span>⬅️</span></div>
-        <div class="section-card" onclick="showSection('class5Section')">📘 الخامس الإعدادي <span>⬅️</span></div>
-        <div class="section-card" onclick="showSection('class4Section')">📙 الرابع الإعدادي <span>⬅️</span></div>
-        <div class="section-card" onclick="showSection('calcSection')" style="border-right-color: #9b59b6;">🖩 الحاسبة المدرسية <span>⬅️</span></div>
-    </div>
-
-    <div id="teachersSection" class="content-area">
-        <h2>إدارة وكادر المدرسة</h2>
-        <div class="section-card">الأستاذ علي عبد الحسين - المدير</div>
-    </div>
+<div id="mainContent" style="display:none;">
+    <header>🏫 إعدادية المشروع للبنين</header>
     
+    <div class="container">
+        <button id="backBtn" class="btn-back" onclick="goHome()">🏠 العودة للقائمة الرئيسية</button>
+        
+        <div id="mainMenu">
+            <div class="section-card" onclick="showSection('teachers')">👨‍🏫 كادر المدرسين <span>⬅️</span></div>
+            <div class="section-card" onclick="showSection('class6')">🎓 السادس الإعدادي <span>⬅️</span></div>
+            <div class="section-card" onclick="showSection('class5')">📘 الخامس الإعدادي <span>⬅️</span></div>
+            <div class="section-card" onclick="showSection('class4')">📙 الرابع الإعدادي <span>⬅️</span></div>
+        </div>
+
+        <div id="teachers" class="content-area">
+            <h2 style="text-align:center; color: var(--primary-color);">إدارة وكادر المدرسة</h2>
+            <div class="section-card">الأستاذ علي عبد الحسين - المدير</div>
+            <div class="section-card">الأستاذ غيث رعد - المرشد التربوي</div>
+        </div>
+
+        <div id="class6" class="content-area">
+            <h2 style="text-align:center; color: var(--primary-color);">شروحات السادس الإعدادي</h2>
+            <p style="text-align:center;">جاري إضافة الروابط والشروحات...</p>
+        </div>
+
+        <div id="class5" class="content-area">
+            <h2 style="text-align:center; color: var(--primary-color);">شروحات الخامس الإعدادي</h2>
+            <p style="text-align:center;">جاري إضافة الروابط والشروحات...</p>
+        </div>
+
+        <div id="class4" class="content-area">
+            <h2 style="text-align:center; color: var(--primary-color);">شروحات الرابع الإعدادي</h2>
+            <p style="text-align:center;">جاري إضافة الروابط والشروحات...</p>
+        </div>
     </div>
 
-<div class="footer">
-    تمتاز اعدادية المشروع للبنين بتاريخها وكادرها المتميز.
+    <div class="footer">
+        إعدادية المشروع للبنين - مسيرة تميز ونجاح
+    </div>
 </div>
 
 <script>
-    // وظيفة الخروج من شاشة الترحيب
-    function exitSplash() {
+    // وظيفة الدخول للتطبيق
+    function enterApp() {
         document.getElementById('splashScreen').style.display = 'none';
-        checkSubscription();
+        document.getElementById('mainContent').style.display = 'block';
     }
 
-    // التحقق من الاشتراك
-    function checkSubscription() {
-        if (!localStorage.getItem('isSubscribed')) {
-            document.getElementById('subscriptionOverlay').style.display = 'flex';
-        }
-    }
-
-    function showFinalBtn() {
-        document.getElementById('finalEnterBtn').style.display = 'block';
-    }
-
-    function completeSubscription() {
-        localStorage.setItem('isSubscribed', 'true');
-        document.getElementById('subscriptionOverlay').style.display = 'none';
-    }
-
-    // وظائف التنقل
-    function showSection(sectionId) {
+    // وظيفة عرض الأقسام
+    function showSection(id) {
         document.getElementById('mainMenu').style.display = 'none';
-        var areas = document.getElementsByClassName('content-area');
-        for(var i=0; i<areas.length; i++) { areas[i].style.display = 'none'; }
-        document.getElementById(sectionId).style.display = 'block';
+        document.getElementById(id).style.display = 'block';
         document.getElementById('backBtn').style.display = 'block';
     }
 
+    // وظيفة العودة للرئيسية
     function goHome() {
         document.getElementById('mainMenu').style.display = 'block';
-        var areas = document.getElementsByClassName('content-area');
-        for(var i=0; i<areas.length; i++) { areas[i].style.display = 'none'; }
+        var sections = document.getElementsByClassName('content-area');
+        for(var i=0; i<sections.length; i++) {
+            sections[i].style.display = 'none';
+        }
         document.getElementById('backBtn').style.display = 'none';
     }
 </script>
