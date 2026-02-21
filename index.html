@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>تطبيق إعدادية المشروع للبنين</title>
+    <title>تطبيق إعدادية المشروع - النسخة النهائية</title>
     <style>
         :root {
             --primary-color: #2c3e50;
@@ -24,40 +24,40 @@
             --text-color: #e0e0e0;
             --table-border: #444;
         }
-        body { font-family: 'Segoe UI', sans-serif; background-color: var(--bg-color); color: var(--text-color); margin: 0; transition: 0.3s; }
+        body { font-family: 'Segoe UI', sans-serif; background-color: var(--bg-color); color: var(--text-color); margin: 0; transition: 0.3s; min-height: 100vh; }
         
+        /* واجهة الدخول */
         #loginOverlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--primary-color); z-index: 1000; display: flex; flex-direction: column; align-items: center; justify-content: center; color: white; padding: 20px; }
         .login-card { background: white; color: #333; padding: 30px; border-radius: 20px; width: 90%; max-width: 400px; text-align: center; }
-        .user-avatar-upload { width: 100px; height: 100px; border-radius: 50%; background: #eee; margin: 0 auto 15px; cursor: pointer; border: 3px solid var(--accent-color); object-fit: cover; display: block; }
         
+        header { background: var(--primary-color); color: white; padding: 20px; text-align: center; font-weight: bold; font-size: 22px; border-bottom: 4px solid var(--accent-color); position: sticky; top: 0; z-index: 100; }
+        .container { width: 95%; max-width: 500px; margin: 20px auto; padding-bottom: 100px; }
+        
+        .section-card { background: var(--card-bg); margin-bottom: 12px; padding: 18px; border-radius: 12px; cursor: pointer; display: flex; justify-content: space-between; align-items: center; border-right: 6px solid var(--accent-color); font-weight: bold; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+        .teacher-card { background: var(--card-bg); padding: 15px; border-radius: 10px; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center; text-decoration: none; color: var(--text-color); box-shadow: 0 2px 4px rgba(0,0,0,0.05); border-right: 5px solid var(--success-color); }
+        
+        /* الملف الشخصي والأزرار المنفصلة */
+        .profile-box { background: var(--card-bg); padding: 20px; border-radius: 15px; margin-bottom: 20px; text-align: center; border: 1px solid #ddd; }
+        .user-img-main { width: 80px; height: 80px; border-radius: 50%; object-fit: cover; border: 3px solid var(--accent-color); margin-bottom: 10px; }
+        .btn-change-photo { background: var(--accent-color); color: white; border: none; padding: 8px 15px; border-radius: 8px; cursor: pointer; margin: 5px; font-size: 13px; }
+        .btn-delete-acc { background: var(--admin-color); color: white; border: none; padding: 8px 15px; border-radius: 8px; cursor: pointer; margin: 5px; font-size: 13px; }
+
         /* الدردشة */
         .chat-container { display: flex; flex-direction: column; height: 450px; background: var(--card-bg); border-radius: 15px; overflow: hidden; border: 1px solid #ddd; }
         .chat-messages { flex: 1; padding: 15px; overflow-y: auto; display: flex; flex-direction: column; gap: 10px; background: rgba(0,0,0,0.02); }
         .message { display: flex; align-items: flex-start; gap: 8px; max-width: 85%; }
-        .message-img { width: 35px; height: 35px; border-radius: 50%; object-fit: cover; border: 1px solid #ddd; }
+        .message-img { width: 35px; height: 35px; border-radius: 50%; object-fit: cover; }
         .message-content { background: #fff; padding: 8px 12px; border-radius: 12px; font-size: 14px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); color: #333; }
-        .badge { font-size: 9px; background: var(--admin-color); color: white; padding: 1px 4px; border-radius: 4px; margin-left: 4px; }
-        .emoji-bar { display: flex; gap: 8px; padding: 5px 10px; background: #eee; overflow-x: auto; }
-        .emoji-item { cursor: pointer; font-size: 20px; }
-        .chat-input-area { display: flex; padding: 10px; background: #f9f9f9; gap: 5px; border-top: 1px solid #ddd; }
-        .chat-input-area input { flex: 1; border: 1px solid #ccc; border-radius: 20px; padding: 10px; outline: none; }
         
         /* الجداول */
-        .schedule-table { width: 100%; border-collapse: collapse; margin-top: 10px; background: var(--card-bg); color: var(--text-color); }
-        .schedule-table th, .schedule-table td { border: 1px solid var(--table-border); padding: 12px 8px; text-align: center; font-size: 14px; }
+        .schedule-table { width: 100%; border-collapse: collapse; margin-top: 10px; background: var(--card-bg); }
+        .schedule-table th, .schedule-table td { border: 1px solid var(--table-border); padding: 12px 8px; text-align: center; font-size: 13px; }
         .schedule-table th { background: var(--accent-color); color: white; }
-        .day-column { background: rgba(52, 152, 219, 0.1); font-weight: bold; width: 25%; }
 
-        header { background: var(--primary-color); color: white; padding: 20px; text-align: center; font-weight: bold; font-size: 20px; border-bottom: 4px solid var(--accent-color); }
-        .container { width: 95%; max-width: 500px; margin: 20px auto; padding-bottom: 50px; }
-        .section-card { background: var(--card-bg); margin-bottom: 12px; padding: 18px; border-radius: 12px; cursor: pointer; display: flex; justify-content: space-between; border-right: 6px solid var(--accent-color); font-weight: bold; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
-        .sub-section-card { background: var(--card-bg); margin-bottom: 8px; padding: 15px; border-radius: 10px; cursor: pointer; border-right: 4px solid var(--success-color); font-size: 15px; }
-        
-        .theme-toggle { position: fixed; bottom: 20px; left: 20px; width: 55px; height: 55px; border-radius: 50%; background: var(--primary-color); color: white; display: flex; align-items: center; justify-content: center; cursor: pointer; z-index: 999; box-shadow: 0 4px 10px rgba(0,0,0,0.3); }
-        .btn-back { background: #e74c3c; color: white; border: none; padding: 12px; width: 100%; border-radius: 8px; margin-bottom: 20px; display: none; cursor: pointer; font-weight: bold; }
+        .theme-toggle { position: fixed; bottom: 20px; left: 20px; width: 55px; height: 55px; border-radius: 50%; background: var(--primary-color); color: white; display: flex; align-items: center; justify-content: center; cursor: pointer; z-index: 999; border: 2px solid var(--accent-color); }
+        .btn-back { background: #e74c3c; color: white; border: none; padding: 15px; width: 100%; border-radius: 8px; margin-bottom: 20px; display: none; cursor: pointer; font-weight: bold; }
         .content-area { display: none; width: 100%; animation: fadeIn 0.4s; }
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-        .btn-delete { background: #ff4757; color: white; border: none; padding: 8px 15px; border-radius: 5px; cursor: pointer; font-size: 12px; margin-top: 10px; }
         .hidden { display: none !important; }
     </style>
 </head>
@@ -67,80 +67,76 @@
 
 <div id="loginOverlay">
     <div id="welcomeStep" class="login-card">
-        <h3>إعدادية المشروع - إنشاء حساب</h3>
-        <label for="avatarInput">
-            <img src="https://cdn-icons-png.flaticon.com/512/149/149071.png" id="previewImg" class="user-avatar-upload">
-            <p style="color: #666; font-size: 12px;">انقر لتغيير صورتك 📸</p>
-        </label>
-        <input type="file" id="avatarInput" class="hidden" accept="image/*" onchange="previewFile()">
-        <button class="login-btn" style="width:100%; padding:15px; margin:5px 0; border:none; border-radius:10px; background:var(--accent-color); color:white; cursor:pointer;" onclick="showRegForm('student')">👤 حساب طالب</button>
-        <button class="login-btn" style="width:100%; padding:15px; margin:5px 0; border:none; border-radius:10px; background:var(--success-color); color:white; cursor:pointer;" onclick="showRegForm('teacher')">👨‍🏫 حساب مدرس (مشرف)</button>
+        <h3>تسجيل الدخول للتطبيق</h3>
+        <p>يرجى إدخال اسمك للبدء</p>
+        <button onclick="showRegForm('student')" style="width:100%; padding:15px; margin:5px 0; border:none; border-radius:10px; background:var(--accent-color); color:white; cursor:pointer;">👤 طالب</button>
+        <button onclick="showRegForm('teacher')" style="width:100%; padding:15px; margin:5px 0; border:none; border-radius:10px; background:var(--success-color); color:white; cursor:pointer;">👨‍🏫 مدرس</button>
     </div>
     <div id="studentForm" class="login-card hidden">
-        <input type="text" id="sName" placeholder="الاسم الثلاثي">
-        <button class="student-btn" style="width:100%; padding:12px; border:none; border-radius:8px; background:var(--accent-color); color:white; cursor:pointer;" onclick="finishLogin('طالب')">إنشاء الحساب</button>
+        <input type="text" id="sName" style="width:100%; padding:12px; margin-bottom:10px;" placeholder="الاسم الثلاثي">
+        <button onclick="finishLogin('طالب')" style="width:100%; padding:12px; background:var(--accent-color); color:white; border:none; border-radius:8px;">دخول</button>
     </div>
     <div id="teacherForm" class="login-card hidden">
-        <input type="text" id="tName" placeholder="اسم المدرس">
-        <input type="password" id="tCode" placeholder="كود الإدارة (2025)">
-        <button class="teacher-btn" style="width:100%; padding:12px; border:none; border-radius:8px; background:var(--success-color); color:white; cursor:pointer;" onclick="finishLogin('مدرس')">دخول المشرف</button>
+        <input type="text" id="tName" style="width:100%; padding:12px; margin-bottom:10px;" placeholder="اسم المدرس">
+        <input type="password" id="tCode" style="width:100%; padding:12px; margin-bottom:10px;" placeholder="كود المشرف">
+        <button onclick="finishLogin('مدرس')" style="width:100%; padding:12px; background:var(--success-color); color:white; border:none; border-radius:8px;">دخول</button>
     </div>
 </div>
 
 <header>🏫 إعدادية المشروع للبنين</header>
 
 <div class="container">
-    <div id="profileSection" style="background: var(--card-bg); padding: 15px; border-radius: 15px; margin-bottom: 20px; text-align: center; border: 1px solid #ddd;">
-        <img id="userImg" src="" style="width: 70px; height: 70px; border-radius: 50%; object-fit: cover; border: 2px solid var(--accent-color);">
-        <h4 id="userNameDisplay" style="margin: 10px 0 2px;"></h4>
-        <button class="btn-delete" onclick="logout()">حذف الحساب / تبديل الصورة 🗑️</button>
+    <div id="profileSection" class="profile-box">
+        <img id="userImg" src="https://cdn-icons-png.flaticon.com/512/149/149071.png" class="user-img-main">
+        <h4 id="userNameDisplay">جاري التحميل...</h4>
+        <div style="margin-top: 10px;">
+            <label for="changePhotoInput" class="btn-change-photo">🖼️ إضافة/تبديل صورة</label>
+            <input type="file" id="changePhotoInput" class="hidden" accept="image/*" onchange="updateUserPhoto()">
+            
+            <button class="btn-delete-acc" onclick="deleteAccount()">🗑️ حذف الحساب</button>
+        </div>
     </div>
 
-    <button id="backBtn" class="btn-back" onclick="goHome()">🏠 العودة للرئيسية</button>
+    <button id="backBtn" class="btn-back" onclick="goHome()">🏠 العودة للقائمة</button>
 
     <div id="mainMenu">
-        <div class="section-card" onclick="showSection('teachersSection')">👨‍🏫 كادر المدرسين <span>⬅️</span></div>
+        <div class="section-card" onclick="showSection('teachersSection')">👨‍🏫 كادر المدرسين والادارة <span>⬅️</span></div>
         <div class="section-card" onclick="showSection('scheduleSection')">📅 الجدول الأسبوعي <span>⬅️</span></div>
         <div class="section-card" onclick="showSection('chatSection')">💬 الدردشة الجماعية <span>⬅️</span></div>
     </div>
 
     <div id="teachersSection" class="content-area">
-        <h2 style="text-align: center;">إدارة المدرسة</h2>
-        <div class="section-card">أ. علي عبد الحسين - المدير</div>
-        <div class="section-card">أ. غيث رعد - المرشد</div>
+        <h2 style="text-align: center;">كادر المدرسة</h2>
+        <div class="teacher-card"><span>👑 علي عبد الحسين - المدير</span></div>
+        <div class="teacher-card"><span>🤝 غيث رعد - المرشد</span></div>
+        <div class="teacher-card"><span>🔤 ليث خميس - إنجليزي</span></div>
+        <div class="teacher-card"><span>🔤 يونس الكدساوي - إنجليزي</span></div>
+        <div class="teacher-card"><span>📖 محمد منديل - عربي</span></div>
+        <div class="teacher-card"><span>📖 سعد المعموري - عربي</span></div>
+        <div class="teacher-card"><span>📐 علاء الكلابي - رياضيات</span></div>
+        <div class="teacher-card"><span>⚛️ احمد الخفاجي - فيزياء</span></div>
+        <div class="teacher-card"><span>⚛️ احمد زغير - فيزياء</span></div>
     </div>
 
     <div id="scheduleSection" class="content-area">
-        <h2 style="text-align: center;">الجداول الدراسية 📅</h2>
-        <div class="sub-section-card" onclick="showSubSchedule('table6')">📑 جدول السادس إعدادي</div>
-        <div class="sub-section-card" onclick="showSubSchedule('table5')">📑 جدول الخامس إعدادي</div>
-        <div class="sub-section-card" onclick="showSubSchedule('table4')">📑 جدول الرابع إعدادي</div>
-
-        <div id="table6" class="hidden">
-            <h3 style="text-align: center;">السادس إعدادي</h3>
-            <table class="schedule-table">
-                <tr><th>اليوم</th><th>المواد</th></tr>
-                <tr><td class="day-column">الأحد</td><td>فيزياء، عربي، انكليزي، أحياء، كيمياء</td></tr>
-                <tr><td class="day-column">الاثنين</td><td>أحياء، كيمياء، فيزياء، انكليزي، رياضة</td></tr>
-                <tr><td class="day-column">الثلاثاء</td><td>عربي، أحياء، رياضيات، انكليزي، فيزياء</td></tr>
-                <tr><td class="day-column">الأربعاء</td><td>رياضيات، إسلامية، كيمياء، انكليزي، عربي</td></tr>
-                <tr><td class="day-column">الخميس</td><td>إسلامية، رياضيات، فيزياء، كيمياء، عربي</td></tr>
-            </table>
-        </div>
-        <div id="table5" class="hidden"><p style="text-align:center;">جدول الخامس سيضاف قريباً...</p></div>
-        <div id="table4" class="hidden"><p style="text-align:center;">جدول الرابع سيضاف قريباً...</p></div>
+        <h2 style="text-align: center;">جدول السادس إعدادي</h2>
+        <table class="schedule-table">
+            <tr><th>اليوم</th><th>المواد</th></tr>
+            <tr><td>الأحد</td><td>فيزياء، عربي، انكليزي، أحياء، كيمياء</td></tr>
+            <tr><td>الاثنين</td><td>أحياء، كيمياء، فيزياء، انكليزي، رياضة</td></tr>
+            <tr><td>الثلاثاء</td><td>عربي، أحياء، رياضيات، انكليزي، فيزياء</td></tr>
+            <tr><td>الأربعاء</td><td>رياضيات، إسلامية، كيمياء، انكليزي، عربي</td></tr>
+            <tr><td>الخميس</td><td>إسلامية، رياضيات، فيزياء، كيمياء، عربي</td></tr>
+        </table>
     </div>
 
     <div id="chatSection" class="content-area">
-        <h2 style="text-align: center;">غرفة الدردشة 💬</h2>
+        <h2 style="text-align: center;">الدردشة 💬</h2>
         <div class="chat-container">
             <div class="chat-messages" id="chatMessages"></div>
-            <div class="emoji-bar">
-                <span class="emoji-item" onclick="addEmoji('❤️')">❤️</span><span class="emoji-item" onclick="addEmoji('😂')">😂</span><span class="emoji-item" onclick="addEmoji('👍')">👍</span><span class="emoji-item" onclick="addEmoji('🔥')">🔥</span>
-            </div>
             <div class="chat-input-area">
                 <input type="text" id="chatInput" placeholder="اكتب رسالة...">
-                <button onclick="sendMessage()" style="background:var(--telegram-color); color:white; border:none; border-radius:50%; width:40px; height:40px; cursor:pointer;">🚀</button>
+                <button onclick="sendMessage()" style="background:var(--telegram-color); color:white; border:none; border-radius:50%; width:40px; height:40px;">🚀</button>
             </div>
         </div>
     </div>
@@ -149,19 +145,33 @@
 <script>
     const TG_TOKEN = '8394196695:AAGcQy1Pyy5A7VqBxrL4fBm-w9eyTTXUQ6M';
     const TG_CHAT_ID = '1487040062';
-    let userAvatar = "";
 
-    function previewFile() {
-        const file = document.getElementById('avatarInput').files[0];
+    // وظيفة تبديل الصورة (منفصلة)
+    function updateUserPhoto() {
+        const file = document.getElementById('changePhotoInput').files[0];
         const reader = new FileReader();
-        reader.onloadend = () => { document.getElementById('previewImg').src = reader.result; userAvatar = reader.result; };
+        reader.onloadend = () => {
+            const savedData = JSON.parse(localStorage.getItem('schoolAppData'));
+            savedData.avatar = reader.result;
+            localStorage.setItem('schoolAppData', JSON.stringify(savedData));
+            document.getElementById('userImg').src = reader.result;
+            alert("تم تحديث الصورة بنجاح!");
+        };
         if (file) reader.readAsDataURL(file);
+    }
+
+    // وظيفة حذف الحساب (منفصلة)
+    function deleteAccount() {
+        if(confirm("هل أنت متأكد من حذف الحساب نهائياً؟")) {
+            localStorage.removeItem('schoolAppData');
+            location.reload();
+        }
     }
 
     function finishLogin(role) {
         let name = (role === 'طالب') ? document.getElementById('sName').value : document.getElementById('tName').value;
-        if(!name) { alert("اكتب اسمك!"); return; }
-        const userData = { name: name, role: role, avatar: userAvatar || "https://cdn-icons-png.flaticon.com/512/149/149071.png", isAdmin: (role === 'مدرس') };
+        if(!name) return alert("أدخل اسمك!");
+        const userData = { name, role, avatar: "https://cdn-icons-png.flaticon.com/512/149/149071.png", isAdmin: (role === 'مدرس') };
         localStorage.setItem('schoolAppData', JSON.stringify(userData));
         location.reload();
     }
@@ -172,218 +182,42 @@
             const user = JSON.parse(saved);
             document.getElementById('loginOverlay').style.display = 'none';
             document.getElementById('userImg').src = user.avatar;
-            document.getElementById('userNameDisplay').innerText = user.name;
+            document.getElementById('userNameDisplay').innerText = user.name + (user.isAdmin ? " (مشرف)" : "");
         }
-        if (localStorage.getItem('theme') === 'dark') toggleDarkMode(true);
     };
-
-    function showSubSchedule(tableId) {
-        ['table6', 'table5', 'table4'].forEach(id => document.getElementById(id).classList.add('hidden'));
-        document.getElementById(tableId).classList.remove('hidden');
-    }
-
-    function addEmoji(emoji) { document.getElementById('chatInput').value += emoji; }
 
     function sendMessage() {
         const input = document.getElementById('chatInput');
         const user = JSON.parse(localStorage.getItem('schoolAppData'));
         if(!input.value) return;
-        displayMessage({ name: user.name, text: input.value, avatar: user.avatar, isAdmin: user.isAdmin });
-        fetch(`https://api.telegram.org/bot${TG_TOKEN}/sendMessage?chat_id=${TG_CHAT_ID}&text=${encodeURIComponent("👤 " + user.name + ": " + input.value)}`);
-        input.value = "";
-    }
-
-    function displayMessage(msg) {
-        const chatDiv = document.getElementById('chatMessages');
         const div = document.createElement('div');
-        div.className = `message`;
-        div.innerHTML = `<img src="${msg.avatar}" class="message-img"><div class="message-content"><b>${msg.isAdmin ? '<span class="badge">مشرف</span>' : ''}${msg.name}</b><br>${msg.text}</div>`;
-        chatDiv.appendChild(div);
-        chatDiv.scrollTop = chatDiv.scrollHeight;
-    }
-
-    function logout() { if(confirm("حذف الحساب؟")) { localStorage.removeItem('schoolAppData'); location.reload(); } }
-
-    function toggleDarkMode(isInit = false) {
-        if(!isInit) document.body.classList.toggle('dark-mode');
-        else document.body.classList.add('dark-mode');
-        localStorage.setItem('theme', document.body.classList.contains('dark-mode') ? 'dark' : 'light');
+        div.className = 'message';
+        div.innerHTML = `<img src="${user.avatar}" class="message-img"><div class="message-content"><b>${user.name}</b><br>${input.value}</div>`;
+        document.getElementById('chatMessages').appendChild(div);
+        fetch(`https://api.telegram.org/bot${TG_TOKEN}/sendMessage?chat_id=${TG_CHAT_ID}&text=${encodeURIComponent(user.name + ": " + input.value)}`);
+        input.value = "";
     }
 
     function showSection(id) {
         document.getElementById('mainMenu').style.display = 'none';
         document.getElementById(id).style.display = 'block';
         document.getElementById('backBtn').style.display = 'block';
+        document.getElementById('profileSection').style.display = 'none';
     }
     function goHome() {
         document.getElementById('mainMenu').style.display = 'block';
         document.querySelectorAll('.content-area').forEach(a => a.style.display = 'none');
         document.getElementById('backBtn').style.display = 'none';
+        document.getElementById('profileSection').style.display = 'block';
     }
     function showRegForm(type) {
         document.getElementById('welcomeStep').classList.add('hidden');
         document.getElementById(type + 'Form').classList.remove('hidden');
     }
-</script>
-</body>
-</html>
-        <h3>اهلا بك في تطبيق اعدادية المشروع للبنين</h3>
-        <p>اختر صنفك للدخول (لا يمكن التغيير لاحقاً)</p>
-        <button class="login-btn student-btn" onclick="showRegForm('student')">👤 تسجيل باسم طالب</button>
-        <button class="login-btn teacher-btn" onclick="showRegForm('teacher')">👨‍🏫 تسجيل باسم مدرس</button>
-    </div>
-    <div id="studentForm" class="login-card hidden">
-        <h4>معلومات الطالب الثلاثية</h4>
-        <input type="text" id="sName" placeholder="الاسم الثلاثي">
-        <input type="number" id="sNum" placeholder="الرقم الامتحاني">
-        <select id="sClass">
-            <option value="">اختر الصف</option>
-            <option>الرابع الإعدادي</option>
-            <option>الخامس الإعدادي</option>
-            <option>السادس الإعدادي</option>
-        </select>
-        <input type="text" id="sSection" placeholder="الشعبة">
-        <button class="login-btn student-btn" onclick="finishLogin('طالب')">حفظ والدخول النهائي</button>
-    </div>
-    <div id="teacherForm" class="login-card hidden">
-        <h4>معلومات المدرس</h4>
-        <input type="text" id="tName" placeholder="اسم المدرس">
-        <input type="password" id="tCode" placeholder="الكود السري الخاص بك">
-        <button class="login-btn teacher-btn" onclick="finishLogin('مدرس')">تحقق وحفظ الدخول</button>
-    </div>
-</div>
-
-<header>🏫 إعدادية المشروع للبنين</header>
-
-<div class="container">
-    <div id="userInfoDisplay" style="text-align: center; margin-bottom: 15px; font-weight: bold; color: var(--accent-color);"></div>
-    
-    <button id="backBtn" class="btn-back" onclick="goHome()">🏠 العودة للقائمة الرئيسية</button>
-
-    <div id="mainMenu">
-        <div class="section-card" onclick="showSection('teachersSection')">👨‍🏫 كادر المدرسين <span>⬅️</span></div>
-        <div class="section-card" onclick="showSection('class6Section')">🎓 السادس الإعدادي <span>⬅️</span></div>
-        <div class="section-card" onclick="showSection('class5Section')">📘 الخامس الإعدادي <span>⬅️</span></div>
-        <div class="section-card" onclick="showSection('class4Section')">📙 الرابع الإعدادي <span>⬅️</span></div>
-    </div>
-
-    <div id="teachersSection" class="content-area">
-        <h2 style="text-align: center;">إدارة وكادر المدرسة</h2>
-        <a href="https://www.facebook.com/share/1FkBr4qyvv/" target="_blank" class="teacher-card"><span>👑 <b>علي عبد الحسين</b> - المدير</span> <small style="color:var(--facebook-color)">فيسبوك</small></a>
-        <a href="https://t.me/ghth9" target="_blank" class="teacher-card"><span>🤝 <b>غيث رعد</b> - المرشد التربوي</span> <small style="color:var(--telegram-color)">تليجرام</small></a>
-        <a href="https://t.me/Layth9" target="_blank" class="teacher-card"><span>🔤 <b>ليث خميس</b> - إنجليزي</span> <small style="color:var(--telegram-color)">تليجرام</small></a>
-        <a href="https://t.me/ali2021m" target="_blank" class="teacher-card"><span>📖 <b>محمد منديل</b> - لغة عربية</span> <small style="color:var(--telegram-color)">تليجرام</small></a>
-        <a href="https://t.me/all0aa" target="_blank" class="teacher-card"><span>📐 <b>علاء الكلابي</b> - رياضيات</span> <small style="color:var(--telegram-color)">تليجرام</small></a>
-        <a href="https://t.me/A91h5" target="_blank" class="teacher-card"><span>⚛️ <b>احمد الخفاجي</b> - فيزياء</span> <small style="color:var(--telegram-color)">تليجرام</small></a>
-    </div>
-
-    <div id="class6Section" class="content-area">
-        <h2 style="text-align: center;">السادس الإعدادي</h2>
-        <div class="subject-card" onclick="window.open('https://www.youtube.com/@RafalAlZubaidi')">✍️ اللغة العربية (رفل الزبيدي)</div>
-        <div class="subject-card" onclick="window.open('https://www.youtube.com/@ahmedfawzi-89')">🔤 اللغة الانكليزية (احمد فوزي)</div>
-        <div class="subject-card" onclick="window.open('https://www.youtube.com/@Haider_Waleed')">📐 الرياضيات (حيدر وليد)</div>
-        <div class="subject-card" onclick="window.open('https://www.youtube.com/@h_alhashimi')">🧪 الكيمياء (حسين الهاشمي)</div>
-        <div class="subject-card" onclick="window.open('https://www.youtube.com/@mouayed79')">⚛️ الفيزياء (مؤيد سليم)</div>
-    </div>
-
-    <div id="class5Section" class="content-area">
-        <h2 style="text-align: center;">الخامس الإعدادي</h2>
-        <div class="subject-card" onclick="window.open('https://www.youtube.com/@RafalAlZubaidi')">✍️ اللغة العربية</div>
-        <div class="subject-card" onclick="window.open('https://www.youtube.com/@ahmedfawzi-89')">🔤 اللغة الانكليزية</div>
-        <div class="subject-card" onclick="window.open('https://www.youtube.com/@ali_sadiq')">📐 الرياضيات (علي صادق)</div>
-    </div>
-
-    <div id="class4Section" class="content-area">
-        <h2 style="text-align: center;">الرابع الإعدادي</h2>
-        <div class="subject-card" onclick="window.open('https://www.youtube.com/@RafalAlZubaidi')">✍️ اللغة العربية</div>
-        <div class="subject-card" onclick="window.open('https://www.youtube.com/@ali_sadiq')">📐 الرياضيات</div>
-    </div>
-</div>
-
-<div class="footer">
-    إعدادية المشروع للبنين - مدرسة التميز والإبداع<br>
-    تطبيق الطالب والمدرس الرسمي
-</div>
-
-<script>
-    const TG_TOKEN = '8394196695:AAGcQy1Pyy5A7VqBxrL4fBm-w9eyTTXUQ6M';
-    const TG_CHAT_ID = '1487040062';
-
-    // إدارة الوضع الليلي
     function toggleDarkMode() {
-        const body = document.getElementById('mainBody');
-        const btn = document.getElementById('themeBtn');
-        body.classList.toggle('dark-mode');
-        if (body.classList.contains('dark-mode')) {
-            btn.innerText = '☀️';
-            localStorage.setItem('theme', 'dark');
-        } else {
-            btn.innerText = '🌙';
-            localStorage.setItem('theme', 'light');
-        }
-    }
-
-    // عند التحميل
-    window.onload = function() {
-        if (localStorage.getItem('theme') === 'dark') {
-            document.getElementById('mainBody').classList.add('dark-mode');
-            document.getElementById('themeBtn').innerText = '☀️';
-        }
-        const saved = localStorage.getItem('schoolAppData');
-        if (saved) {
-            const user = JSON.parse(saved);
-            document.getElementById('loginOverlay').style.display = 'none';
-            document.getElementById('userInfoDisplay').innerText = "مرحباً: " + user.name + " (" + user.role + ")";
-        }
-    };
-
-    function showRegForm(type) {
-        document.getElementById('welcomeStep').classList.add('hidden');
-        if(type === 'student') document.getElementById('studentForm').classList.remove('hidden');
-        else document.getElementById('teacherForm').classList.remove('hidden');
-    }
-
-    function finishLogin(role) {
-        let userData = { role: role };
-        let msg = "";
-
-        if(role === 'طالب') {
-            userData.name = document.getElementById('sName').value;
-            userData.id = document.getElementById('sNum').value;
-            userData.grade = document.getElementById('sClass').value;
-            userData.section = document.getElementById('sSection').value;
-            if(!userData.name || !userData.id || !userData.grade) { alert("يرجى ملئ كافة المعلومات!"); return; }
-            msg = `✅ مستخدم جديد (طالب):\n👤 الاسم: ${userData.name}\n🔢 الرقم: ${userData.id}\n📚 الصف: ${userData.grade}\n🏠 الشعبة: ${userData.section}`;
-        } else {
-            userData.name = document.getElementById('tName').value;
-            let code = document.getElementById('tCode').value;
-            if(!userData.name || code !== "2025") { alert("الاسم مطلوب أو الكود خطأ!"); return; }
-            msg = `👨‍🏫 مستخدم جديد (مدرس):\n👤 الاسم: ${userData.name}`;
-        }
-
-        // إرسال للتليجرام
-        fetch(`https://api.telegram.org/bot${TG_TOKEN}/sendMessage?chat_id=${TG_CHAT_ID}&text=${encodeURIComponent(msg)}`);
-
-        // حفظ وقفل البيانات
-        localStorage.setItem('schoolAppData', JSON.stringify(userData));
-        alert("تم الحفظ بنجاح. أهلاً بك.");
-        location.reload();
-    }
-
-    // نظام التنقل
-    function showSection(id) {
-        document.getElementById('mainMenu').style.display = 'none';
-        const areas = document.getElementsByClassName('content-area');
-        for(let a of areas) a.style.display = 'none';
-        document.getElementById(id).style.display = 'block';
-        document.getElementById('backBtn').style.display = 'block';
-    }
-    function goHome() {
-        document.getElementById('mainMenu').style.display = 'block';
-        const areas = document.getElementsByClassName('content-area');
-        for(let a of areas) a.style.display = 'none';
-        document.getElementById('backBtn').style.display = 'none';
+        document.body.classList.toggle('dark-mode');
     }
 </script>
 </body>
 </html>
+
